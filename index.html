@@ -521,27 +521,31 @@
             color: #0a3a2e;
             font-size: 0.9rem;
             font-weight: bold;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                #0a3a2e 25%, 
-                transparent 50%, 
-                #0a3a2e 75%, 
-                transparent 100%
-            );
-            background-size: 100px 3px;
-            background-repeat: repeat-x;
-            background-position: 0 bottom;
-            padding-bottom: 8px;
-            animation: loading-dots 1.5s linear infinite;
             white-space: nowrap;
+            padding-right: 30px;
         }
 
-        @keyframes loading-dots {
+        .download-app-btn.loading::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border: 3px solid transparent;
+            border-top-color: #0a3a2e;
+            border-right-color: #0a3a2e;
+            border-radius: 50%;
+            animation: loading-spinner 1s linear infinite;
+        }
+
+        @keyframes loading-spinner {
             0% {
-                background-position: 0 bottom;
+                transform: translateY(-50%) rotate(0deg);
             }
             100% {
-                background-position: 100px bottom;
+                transform: translateY(-50%) rotate(360deg);
             }
         }
 
@@ -618,7 +622,6 @@
     <!-- Download App Button - Floating -->
     <div class="download-app-btn" id="download-app-btn">
         <span class="btn-text">
-            <i class="fab fa-android"></i>
             <i class="fas fa-download"></i>
             تحميل التطبيق
         </span>
@@ -737,37 +740,37 @@
     {
         text: "﴿ ربنا اغفر لي ولوالدي وللمؤمنين يوم يقوم الحساب ﴾",
     },
-	 {
+     {
         text: "﴿ رب أرحمهما كما ربياني صغيراً ﴾",
     },
     {
         text: "﴿ رب زدني علما ﴾",
     },
-	{
+    {
         text: "﴿ أني مسنى الضر و أنت أرحم الرحمين ﴾",
     },
-	{
+    {
         text: "﴿ أن لا إله  إلا انت سبحانك إني كنت من الظالمين ﴾",
     },
-	{
+    {
         text: "﴿ رب لا تذرني فردا و أنت خير الوارثين ﴾",
     },
-	{
+    {
         text: "﴿ رب فلا تجعلني في القوم الظالمين  ﴾",
     },
     {
         text: "﴿  رب أعوذ بك من همزات الشياطين وأعوذ بك رب أن يحضرون ﴾",
     },
-	{
+    {
         text: "﴿ ربناء امنا فاغفر لنا و ارحمنا وأنت خير الراحمين ﴾",
     },
-	{
+    {
         text: "﴿ رب أغفر و أرحم و أنت  خير  الراحمين ﴾",
     },
-	{
+    {
         text: "﴿ ربنا أصرف عنا عذاب جهنم إن عذابها كان غراما إنها ساءت مستقرا و مقاما﴾",
     },
-	{
+    {
         text: "﴿ ربنا هب لنا من أزواجنا وذرياتنا قرة أعين و اجعلنا للمتقين إماما ﴾",
     },
     {
@@ -776,13 +779,13 @@
     {
         text: "﴿ فافتح بيني وبينهم فتحا ونجني ومن معي من المؤمنين ﴾",
     },
-	 {
+     {
         text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت على و على ولدي و أن اعمل صالحا ترضاه و أدخلني برحمتك في عبادك الصالحين ﴾",
     },
     {
         text: "﴿ رب إني ظلمت نفسي فاغفر لي ﴾",
     },
-	{
+    {
         text: "﴿ رب نجني من القوم الظالمين ﴾",
     },
     {
@@ -1165,20 +1168,20 @@
         // وظيفة تحميل التطبيق
         function downloadApp() {
             const downloadBtn = document.getElementById('download-app-btn');
-            
+
             // إضافة حالة التحميل
             downloadBtn.classList.add('loading');
-            
+
             // بعد 3 ثوانِ، إزالة حالة التحميل والانتقال لرابط التحميل
             setTimeout(() => {
                 downloadBtn.classList.remove('loading');
-                
+
                 // يمكنك تغيير هذا الرابط إلى رابط التحميل الفعلي للتطبيق
                 window.open('https://play.google.com/store/apps', '_blank');
-                
+
                 // أو استخدم رابط مباشر للتطبيق
                 // window.open('رابط-تحميل-التطبيق', '_blank');
-                
+
             }, 3000);
         }
 
@@ -1188,10 +1191,10 @@
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight;
-            
+
             // حساب المسافة من نهاية الصفحة
             const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
-            
+
             // إخفاء الزر إذا كان على بُعد 50 بيكسل أو أقل من نهاية الصفحة
             if (distanceFromBottom <= 50) {
                 downloadBtn.style.opacity = '0';
@@ -1207,7 +1210,7 @@
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', () => {
             // تحديث السنة تلقائياً
-           
+
 
             displayDuas();
 
@@ -1266,7 +1269,7 @@
 
             // معالج حدث التمرير للتحكم في إظهار وإخفاء زر التحميل
             window.addEventListener('scroll', handleDownloadButtonVisibility);
-            
+
             // تشغيل الوظيفة مرة واحدة عند تحميل الصفحة
             handleDownloadButtonVisibility();
         });
