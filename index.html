@@ -472,6 +472,69 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Download App Button - Floating */
+        .download-app-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(4, 106, 56, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(4, 106, 56, 0.3);
+            color: #0a3a2e;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(4, 106, 56, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+            justify-content: center;
+            text-decoration: none;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .download-app-btn:hover {
+            background: rgba(4, 106, 56, 0.25);
+            border-color: rgba(4, 106, 56, 0.5);
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 12px 35px rgba(4, 106, 56, 0.3);
+        }
+
+        /* Loading state for download button */
+        .download-app-btn.loading .btn-text {
+            visibility: hidden;
+        }
+
+        .download-app-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid transparent;
+            border-top-color: #0a3a2e;
+            border-radius: 50%;
+            animation: button-spinner 1s linear infinite;
+        }
+
+        /* Responsive design for download button */
+        @media (max-width: 768px) {
+            .download-app-btn {
+                bottom: 20px;
+                padding: 12px 25px;
+                font-size: 1rem;
+                min-width: 180px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -531,6 +594,14 @@
                 <i class="fas fa-times"></i> إغلاق
             </button>
         </div>
+    </div>
+
+    <!-- Download App Button - Floating -->
+    <div class="download-app-btn" id="download-app-btn">
+        <span class="btn-text">
+            <i class="fas fa-download"></i>
+            تحميل التطبيق
+        </span>
     </div>
 
     <!-- Footer -->
@@ -1071,6 +1142,26 @@
             document.body.style.overflow = 'auto';
         }
 
+        // وظيفة تحميل التطبيق
+        function downloadApp() {
+            const downloadBtn = document.getElementById('download-app-btn');
+            
+            // إضافة حالة التحميل
+            downloadBtn.classList.add('loading');
+            
+            // بعد 3 ثوانِ، إزالة حالة التحميل والانتقال لرابط التحميل
+            setTimeout(() => {
+                downloadBtn.classList.remove('loading');
+                
+                // يمكنك تغيير هذا الرابط إلى رابط التحميل الفعلي للتطبيق
+                window.open('https://play.google.com/store/apps', '_blank');
+                
+                // أو استخدم رابط مباشر للتطبيق
+                // window.open('رابط-تحميل-التطبيق', '_blank');
+                
+            }, 3000);
+        }
+
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', () => {
             // تحديث السنة تلقائياً
@@ -1123,6 +1214,12 @@
                 if (e.target.id === 'collective-modal') {
                     closeCollectiveModal();
                 }
+            });
+
+            // معالج حدث زر تحميل التطبيق
+            document.getElementById('download-app-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                downloadApp();
             });
         });
     </script>
