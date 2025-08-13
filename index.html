@@ -513,17 +513,36 @@
         }
 
         .download-app-btn.loading::after {
-            content: "";
+            content: "جاري تجهيز الملف";
             position: absolute;
-            width: 20px;
-            height: 20px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 3px solid transparent;
-            border-top-color: #0a3a2e;
-            border-radius: 50%;
-            animation: button-spinner 1s linear infinite;
+            color: #0a3a2e;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #0a3a2e 25%, 
+                transparent 50%, 
+                #0a3a2e 75%, 
+                transparent 100%
+            );
+            background-size: 100px 3px;
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+            padding-bottom: 8px;
+            animation: loading-dots 1.5s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes loading-dots {
+            0% {
+                background-position: 0 bottom;
+            }
+            100% {
+                background-position: 100px bottom;
+            }
         }
 
         /* Responsive design for download button */
@@ -599,6 +618,7 @@
     <!-- Download App Button - Floating -->
     <div class="download-app-btn" id="download-app-btn">
         <span class="btn-text">
+            <i class="fab fa-android"></i>
             <i class="fas fa-download"></i>
             تحميل التطبيق
         </span>
@@ -1162,6 +1182,28 @@
             }, 3000);
         }
 
+        // وظيفة التحكم في إظهار وإخفاء زر التحميل عند الاقتراب من نهاية الصفحة
+        function handleDownloadButtonVisibility() {
+            const downloadBtn = document.getElementById('download-app-btn');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            // حساب المسافة من نهاية الصفحة
+            const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
+            
+            // إخفاء الزر إذا كان على بُعد 50 بيكسل أو أقل من نهاية الصفحة
+            if (distanceFromBottom <= 50) {
+                downloadBtn.style.opacity = '0';
+                downloadBtn.style.visibility = 'hidden';
+                downloadBtn.style.transform = 'translateX(-50%) translateY(20px)';
+            } else {
+                downloadBtn.style.opacity = '1';
+                downloadBtn.style.visibility = 'visible';
+                downloadBtn.style.transform = 'translateX(-50%) translateY(0)';
+            }
+        }
+
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', () => {
             // تحديث السنة تلقائياً
@@ -1221,6 +1263,12 @@
                 e.preventDefault();
                 downloadApp();
             });
+
+            // معالج حدث التمرير للتحكم في إظهار وإخفاء زر التحميل
+            window.addEventListener('scroll', handleDownloadButtonVisibility);
+            
+            // تشغيل الوظيفة مرة واحدة عند تحميل الصفحة
+            handleDownloadButtonVisibility();
         });
     </script>
 
