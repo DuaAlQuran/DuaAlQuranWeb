@@ -1,0 +1,1133 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدعية القرآن الكريم </title>
+    <link rel="stylesheet" href="all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8f5f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-image: url('islamic-pattern.png');
+            background-blend-mode: overlay;
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for all elements */
+        * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        header {
+            background: linear-gradient(135deg, #046a38, #0a3a2e);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            margin: 0;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .search-container {
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 30px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            background: transparent;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background: #d4af37;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s;
+            margin-left: 5px;
+        }
+
+        .search-container button:hover {
+            background: #c19b2e;
+        }
+
+        /* Collective Prayer Button */
+        .collective-prayer-container {
+            margin: 15px auto 0;
+            text-align: center;
+        }
+
+        .collective-prayer-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #d4af37, #c19b2e);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .collective-prayer-btn:hover {
+            background: linear-gradient(135deg, #c19b2e, #d4af37);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Collective Prayer Modal */
+        .collective-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .collective-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            direction: rtl;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .collective-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #d4af37;
+        }
+
+        .collective-header h2 {
+            color: #0a3a2e;
+            font-size: 2rem;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .collective-header p {
+            color: #666;
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+        }
+
+        .collective-prayers {
+            line-height: 2.2;
+            font-size: 1.3rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .collective-prayer-item {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(4, 106, 56, 0.05);
+            border-radius: 12px;
+            border-right: 5px solid #d4af37;
+        }
+
+        .collective-prayer-text {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #0a3a2e;
+            line-height: 1.8;
+        }
+
+        .collective-prayer-reference {
+            color: #666;
+            font-size: 1rem;
+            font-style: italic;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .collective-close-btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 12px 30px;
+            background: #0a3a2e;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .collective-close-btn:hover {
+            background: #046a38;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #0a3a2e;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: #d4af37;
+            margin: 10px auto;
+        }
+
+        /* Dua Cards */
+        .dua-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .dua-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        .dua-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .dua-card h3 {
+            color: #046a38;
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .dua-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .dua-actions button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn {
+            background: #0a3a2e;
+            color: white;
+        }
+
+        .copy-btn:hover {
+            background: #046a38;
+        }
+
+        .save-btn {
+            background: #d4af37;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #c19b2e;
+        }
+
+        /* Loading spinner in buttons */
+        .btn-loading .btn-text {
+            visibility: hidden;
+        }
+
+        .btn-loading::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-spinner 1s linear infinite;
+        }
+
+        @keyframes button-spinner {
+            from { transform: rotate(0turn); }
+            to { transform: rotate(1turn); }
+        }
+
+        /* Background selection modal */
+        .background-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background-options {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            direction: rtl;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .background-options h3 {
+            margin-top: 0;
+            color: #0a3a2e;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+        }
+
+        .background-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .background-item {
+            border: 3px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            min-height: 100px; /* Ensure a minimum height for visual consistency */
+        }
+
+        .background-item:hover {
+            border-color: #d4af37;
+            transform: scale(1.05);
+        }
+
+        .background-item.selected {
+            border-color: #046a38;
+            box-shadow: 0 0 10px rgba(4, 106, 56, 0.5);
+        }
+
+        .background-item .preview {
+            width: 100%;
+            height: 50px; /* Fixed height for preview */
+            border-radius: 5px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .background-item .name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .background-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .save-background-btn {
+            background: #0a3a2e;
+            color: white;
+        }
+
+        .save-background-btn:hover {
+            background: #046a38;
+        }
+
+        .cancel-background-btn {
+            background: #f0f0f0;
+            color: #333;
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #0a3a2e;
+            color: white;
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dua-list {
+                grid-template-columns: 1fr;
+            }
+
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Loading Indicator */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #0a3a2e;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>أدعية القرآن الكريم</h1>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="ابحث في أدعية القرآن...">
+            <button id="search-btn"><i class="fas fa-search"></i> بحث</button>
+        </div>
+
+        <!-- زر جامع الدعاء -->
+        <div class="collective-prayer-container">
+            <button id="collective-prayer-btn" class="collective-prayer-btn">
+                <i class="fas fa-book-open"></i> جامع الدعاء
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="loading">
+            <i class="fas fa-spinner"></i>
+        </div>
+
+        <div class="dua-list" id="dua-container">
+            <!-- سيتم ملؤه بالبيانات -->
+        </div>
+    </main>
+
+    <!-- Background Selection Modal -->
+    <div class="background-modal" id="background-modal">
+        <div class="background-options">
+            <h3>اختر خلفية للبطاقة</h3>
+            <div class="background-grid" id="background-grid">
+                <!-- سيتم ملؤه بالخلفيات -->
+            </div>
+            <div class="background-actions">
+                <button class="save-background-btn" id="save-background-btn">حفظ الاختيار</button>
+                <button class="cancel-background-btn" id="cancel-background-btn">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collective Prayer Modal -->
+    <div class="collective-modal" id="collective-modal">
+        <div class="collective-content">
+            <div class="collective-header">
+                <h2>جامع الدعاء - أدعية القرآن الكريم</h2>
+            </div>
+            <div class="collective-prayers" id="collective-prayers-content">
+                <!-- سيتم ملؤه بالأدعية -->
+            </div>
+            <button class="collective-close-btn" id="collective-close-btn">
+                <i class="fas fa-times"></i> إغلاق
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p> <span ></span> وقف لله نعالى  </p>
+    </footer>
+
+    <script>
+        // بيانات الأدعية
+    const duas = [
+    {
+        text: "﴿ ربنا أفرغ علينا صبرا وثبت أقدامنا وانصرنا على القوم الكافرين ﴾",
+    },
+    {
+        text: "﴿ ربنا لا تؤاخذنا إن نسينا أو أخطأنا ربنا ولا تحمل علينا إصرا كما حملته على الذين من قبلنا ربنا ولا تحملنا ما لا طاقة لنا به واعف عنا واغفر لنا وارحمنا أنت مولانا فانصرنا على القوم الكافرين ﴾",
+    },
+    {
+        text: "﴿ ربنا لا تزغ قلوبنا بعد إذ هديتنا وهب لنا من لدنك رحمة إنك أنت الوهاب ﴾",
+    },
+    {
+        text: "﴿ ربنا إنك جامع الناس ليوم لا ريب فيه إن الله لا يخلف الميعاد ﴾",
+    },
+    {
+        text: "﴿ ربنا إننا آمنا فاغفر لنا ذنوبنا وقنا عذاب النار﴾",
+    },
+    {
+        text: "﴿ اللهم مالك الملك تؤتي الملك من تشاء وتنزع الملك ممن تشاء وتعز من تشاء وتذل من تشاء بيدك الخير إنك على كل شيء قدير تولج الليل في النهار وتولج النهار في الليل وتخرج الحي من الميت وتخرج الميت من الحي وترزق من تشاء بغير حساب ﴾",
+    },
+    {
+        text: "﴿ رب هب لي من لدنك ذرية طيبة إنك سميع الدعاء ﴾",
+    },
+    {
+        text: "﴿ ربنا آمنا بما أنزلت واتبعنا الرسول فاكتبنا مع الشاهدين ﴾",
+    },
+    {
+        text: "﴿ آمنا بالله وما أنزل علينا وما أنزل على إبراهيم وإسماعيل وإسحاق ويعقوب والأسباط وما أوتي موسى وعيسى والنبيون من ربهم لا نفرق بين أحد منهم ونحن له مسلمون ﴾",
+    },
+    {
+        text: "﴿ ربنا اغفر لنا ذنوبنا وإسرافنا في أمرنا وثبت أقدامنا وانصرنا على القوم الكافرين ﴾",
+    },
+    {
+        text: "﴿ حسبنا الله ونعم الوكيل ﴾",
+    },
+    {
+        text: "﴿ ربنا ما خلقت هذا باطلا سبحانك فقنا عذاب النار﴾",
+    },
+    {
+        text: "﴿ ربنا إنك من تدخل النار فقد أخزيته وما للظالمين من أنصار﴾",
+    },
+    {
+        text: "﴿ ربنا إننا سمعنا مناديا ينادي للإيمان أن آمنوا بربكم فآمنا ﴾",
+    },
+    {
+        text: "﴿ ربنا فاغفر لنا ذنوبنا وكفر عنا سيئاتنا وتوفنا مع الأبرار ﴾",
+    },
+    {
+        text: "﴿ ربنا وآتنا ما وعدتنا على رسلك ولا تخزنا يوم القيامة إنك لا تخلف الميعاد ﴾",
+    },
+    {
+        text: "﴿ ربنا أخرجنا من هذه القرية الظالم أهلها واجعل لنا من لدنك وليا واجعل لنا من لدنك نصيرا ﴾",
+    },
+    {
+        text: "﴿ ربنا آمنا فاكتبنا مع الشاهدين ﴾",
+    },
+    {
+        text: "﴿ وما لنا لا نؤمن بالله وما جاءنا من الحق ونطمع أن يدخلنا ربنا مع القوم الصالحين ﴾",
+    },
+    {
+        text: "﴿ إن صلاتي ونسكي ومحياي ومماتي لله رب العالمين لا شريك له وبذلك أمرت وأنا أول المسلمين ﴾",
+    },
+    {
+        text: "﴿ ربنا لا تجعلنا مع القوم الظالمين ﴾",
+    },
+    {
+        text: "﴿ ربنا أفرغ علينا صبرا وتوفنا مسلمين ﴾",
+    },
+    {
+        text: "﴿ واكتب لنا في هذه الدنيا حسنة وفي الآخرة إنا هدنا إليك ﴾",
+    },
+    {
+        text: "﴿ حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم ﴾",
+    },
+    {
+        text: "﴿ على الله توكلنا ربنا لا تجعلنا فتنة للقوم الظالمين ﴾",
+    },
+    {
+        text: "﴿ ونجنا برحمتك من القوم الكافرين ﴾",
+    },
+    {
+        text: "﴿ ربنا إنك آتيت فرعون وملأه زينة وأموالا في الحياة الدنيا ربنا ليضلوا عن سبيلك ربنا اطمس على أموالهم واشدد على قلوبهم فلا يؤمنوا حتى يروا العذاب الأليم ﴾",
+    },
+    {
+        text: "﴿ رب إني أعوذ بك أن أسألك ما ليس لي به علم وإلا تغفر لي وترحمني أكن من الخاسرين ﴾",
+    },
+    {
+        text: "﴿ رب قد آتيتني من الملك وعلمتني من تأويل الأحاديث فاطر السماوات والأرض أنت وليي في الدنيا والآخرة توفني مسلما وألحقني بالصالحين ﴾",
+    },
+    {
+        text: "﴿ رب اجعل هذا البلد آمنا واجنبني وبني أن نعبد الأصنام ﴾",
+    },
+    {
+        text: "﴿ رب إنهن أضللن كثيرا من الناس فمن تبعني فإنه مني ومن عصاني فإنك غفور رحيم ﴾",
+    },
+    {
+        text: "﴿ ربنا إنك تعلم ما نخفي وما نعلن وما يخفى على الله من شيء في الأرض ولا في السماء ﴾",
+    },
+    {
+        text: "﴿ إن ربي لسميع الدعاء ﴾",
+    },
+    {
+        text: "﴿ رب اجعلني مقيم الصلاة ومن ذريتي ربنا وتقبل دعاء ﴾",
+    },
+    {
+        text: "﴿ ربنا اغفر لي ولوالدي وللمؤمنين يوم يقوم الحساب ﴾",
+    },
+	 {
+        text: "﴿ رب أرحمهما كما ربياني صغيراً ﴾",
+    },
+    {
+        text: "﴿ رب زدني علما ﴾",
+    },
+	{
+        text: "﴿ أني مسنى الضر و أنت أرحم الرحمين ﴾",
+    },
+	{
+        text: "﴿ أن لا إله  إلا انت سبحانك إني كنت من الظالمين ﴾",
+    },
+	{
+        text: "﴿ رب لا تذرني فردا و أنت خير الوارثين ﴾",
+    },
+	{
+        text: "﴿ رب فلا تجعلني في القوم الظالمين  ﴾",
+    },
+    {
+        text: "﴿  رب أعوذ بك من همزات الشياطين وأعوذ بك رب أن يحضرون ﴾",
+    },
+	{
+        text: "﴿ ربناء امنا فاغفر لنا و ارحمنا وأنت خير الراحمين ﴾",
+    },
+	{
+        text: "﴿ رب أغفر و أرحم و أنت  خير  الراحمين ﴾",
+    },
+	{
+        text: "﴿ ربنا أصرف عنا عذاب جهنم إن عذابها كان غراما إنها ساءت مستقرا و مقاما﴾",
+    },
+	{
+        text: "﴿ ربنا هب لنا من أزواجنا وذرياتنا قرة أعين و اجعلنا للمتقين إماما ﴾",
+    },
+    {
+        text: "﴿ رب هب لي حكما وألحقني بالصالحين واجعل لي لسان صدق في الآخرين واجعلني من ورثة جنة النعيم ولا تخزني يوم يبعثون يوم لا ينفع مال ولا بنون  إلا من أتى الله بقلب سليم ﴾",
+    },
+    {
+        text: "﴿ فافتح بيني وبينهم فتحا ونجني ومن معي من المؤمنين ﴾",
+    },
+	 {
+        text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت على و على ولدي و أن اعمل صالحا ترضاه و أدخلني برحمتك في عبادك الصالحين ﴾",
+    },
+    {
+        text: "﴿ رب إني ظلمت نفسي فاغفر لي ﴾",
+    },
+	{
+        text: "﴿ رب نجني من القوم الظالمين ﴾",
+    },
+    {
+        text: "﴿ رب إني لما أنزلت إلي من خير فقير ﴾",
+    },
+    {
+        text: "﴿ رب انصرني على القوم المفسدين ﴾",
+    },
+    {
+        text: "﴿ أني مسني الشيطان بنصب وعذاب ﴾",
+    },
+    {
+        text: "﴿ اللهم فاطر السماوات والأرض عالم الغيب والشهادة أنت تحكم بين عبادك في ما كانوا فيه يختلفون ﴾",
+    },
+    {
+        text: "﴿ ربنا وسعت كل شيء رحمة وعلما فاغفر للذين تابوا واتبعوا سبيلك وقهم عذاب الجحيم ﴾",
+    },
+    {
+        text: "﴿ ربنا وأدخلهم جنات عدن التي وعدتهم ومن صلح من آبائهم وأزواجهم وذرياتهم إنك أنت العزيز الحكيم ﴾",
+    },
+    {
+        text: "﴿ وقهم السيئات ومن تق السيئات يومئذ فقد رحمته وذلك هو الفوز العظيم ﴾",
+    },
+    {
+        text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت علي وعلى والدي وأن أعمل صالحا ترضاه وأصلح لي في ذريتي إني تبت إليك وإني من المسلمين ﴾",
+    },
+    {
+        text: "﴿ أني مغلوب فانتصر ﴾",
+    },
+    {
+        text: "﴿ ربنا اغفر لنا ولإخواننا الذين سبقونا بالإيمان ولا تجعل في قلوبنا غلا للذين آمنوا ربنا إنك رءوف رحيم ﴾",
+    },
+    {
+        text: "﴿ ربنا عليك توكلنا وإليك أنبنا وإليك المصير﴾",
+    },
+    {
+        text: "﴿ ربنا لا تجعلنا فتنة للذين كفروا واغفر لنا ربنا إنك أنت العزيز الحكيم ﴾",
+    },
+    {
+        text: "﴿ رب اغفر لي ولوالدي ولمن دخل بيتي مؤمنا وللمؤمنين والمؤمنات ولا تزد الظالمين إلا تبارا ﴾",
+    }
+];
+
+        // خلفيات البطاقات - شفافة زجاجية
+        const backgrounds = [
+            {
+                name: 'الافتراضي',
+                style: 'background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); color: #2c3e50; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);',
+                preview: 'linear-gradient(135deg, rgba(248, 245, 240, 0.8), rgba(255, 255, 255, 0.8))'
+            },
+            {
+                name: 'ذهبي زجاجي',
+                style: 'background: rgba(212, 175, 55, 0.3); backdrop-filter: blur(15px); border: 2px solid rgba(212, 175, 55, 0.4); color: #1a1a1a; text-shadow: 1px 1px 3px rgba(255,255,255,0.8);',
+                preview: 'linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(244, 228, 166, 0.3))'
+            },
+            {
+                name: 'أخضر شفاف',
+                style: 'background: rgba(4, 106, 56, 0.25); backdrop-filter: blur(12px); border: 2px solid rgba(4, 106, 56, 0.4); color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);',
+                preview: 'linear-gradient(135deg, rgba(4, 106, 56, 0.25), rgba(10, 143, 74, 0.25))'
+            },
+            {
+                name: 'بني متلألئ',
+                style: 'background: rgba(139, 69, 19, 0.3); backdrop-filter: blur(10px); border: 2px solid rgba(139, 69, 19, 0.5); color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);',
+                preview: 'linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(205, 133, 63, 0.3))'
+            },
+            {
+                name: 'أزرق كريستالي',
+                style: 'background: rgba(30, 60, 114, 0.3); backdrop-filter: blur(15px); border: 2px solid rgba(30, 60, 114, 0.5); color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);',
+                preview: 'linear-gradient(135deg, rgba(30, 60, 114, 0.3), rgba(42, 82, 152, 0.3))'
+            },
+            {
+                name: 'بنفسجي شفاف',
+                style: 'background: rgba(102, 126, 234, 0.25); backdrop-filter: blur(12px); border: 2px solid rgba(102, 126, 234, 0.4); color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);',
+                preview: 'linear-gradient(135deg, rgba(102, 126, 234, 0.25), rgba(118, 75, 162, 0.25))'
+            },
+            {
+                name: 'وردي زجاجي',
+                style: 'background: rgba(255, 236, 210, 0.4); backdrop-filter: blur(10px); border: 2px solid rgba(252, 182, 159, 0.5); color: #8B4513; text-shadow: 1px 1px 3px rgba(255,255,255,0.9);',
+                preview: 'linear-gradient(135deg, rgba(255, 236, 210, 0.4), rgba(252, 182, 159, 0.4))'
+            },
+            {
+                name: 'رمادي معتم',
+                style: 'background: rgba(189, 195, 199, 0.3); backdrop-filter: blur(15px); border: 2px solid rgba(44, 62, 80, 0.4); color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);',
+                preview: 'linear-gradient(135deg, rgba(189, 195, 199, 0.3), rgba(44, 62, 80, 0.3))'
+            }
+        ];
+
+        // متغيرات المشاركة والخلفيات
+        let currentDuaForSharing = null;
+        let selectedBackground = 0; // الافتراضي
+        let currentAction = ''; // 'save' أو 'share'
+
+        // عرض الأدعية
+        function displayDuas(duasToShow = duas) {
+            const container = document.getElementById('dua-container');
+            container.innerHTML = '';
+
+            duasToShow.forEach((dua, index) => {
+                const duaCard = document.createElement('div');
+                duaCard.className = 'dua-card';
+                // استخدام الخلفية الافتراضية دائماً في العرض
+                duaCard.style.cssText = backgrounds[0].style;
+
+                duaCard.innerHTML = `
+                    <h3>${dua.text}</h3>
+                    <div class="dua-actions">
+                        <button class="copy-btn">
+                            <span class="btn-text"><i class="fas fa-copy"></i> نسخ</span>
+                        </button>
+                        <button class="save-btn">
+                            <span class="btn-text"><i class="fas fa-camera"></i> حفظ</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(duaCard);
+            });
+
+            // إضافة معالجات الأحداث للأزرار الجديدة
+            addEventHandlers();
+        }
+
+        // إزالة التشكيل من النص
+        function removeTashkeel(text) {
+            return text.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
+        }
+
+        // البحث في الأدعية - محسن لدعم النصوص مع وبدون تشكيل
+        function searchDuas() {
+            const searchTerm = document.getElementById('search-input').value.trim();
+
+            if (!searchTerm) {
+                displayDuas();
+                return;
+            }
+
+            // تحضير النص للبحث
+            const normalizedSearchTerm = removeTashkeel(searchTerm).toLowerCase();
+
+            // البحث المباشر بدون تأخير
+            const filteredDuas = duas.filter(dua => {
+                const normalizedText = removeTashkeel(dua.text).toLowerCase();
+                return normalizedText.includes(normalizedSearchTerm) ||
+                       dua.text.toLowerCase().includes(searchTerm.toLowerCase());
+            });
+
+            displayDuas(filteredDuas);
+        }
+
+        // نسخ النص مع دعم جميع الأجهزة
+        function copyToClipboard(text) {
+            return new Promise((resolve, reject) => {
+                if (navigator.clipboard) {
+                    // طريقة حديثة
+                    navigator.clipboard.writeText(text)
+                        .then(resolve)
+                        .catch(() => {
+                            // طريقة بديلة إذا فشلت الطريقة الحديثة
+                            fallbackCopyText(text) ? resolve() : reject();
+                        });
+                } else {
+                    // طريقة قديمة للمتصفحات القديمة
+                    fallbackCopyText(text) ? resolve() : reject();
+                }
+            });
+        }
+
+        // طريقة بديلة للنسخ
+        function fallbackCopyText(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            document.body.appendChild(textarea);
+            textarea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return successful;
+            } catch (err) {
+                document.body.removeChild(textarea);
+                return false;
+            }
+        }
+
+        // إضافة معالجات الأحداث للأزرار
+        function addEventHandlers() {
+            // أزرار النسخ
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const duaCard = this.closest('.dua-card');
+                    const duaText = duaCard.querySelector('h3').innerText;
+                    const btnText = this.querySelector('.btn-text');
+                    const originalHtml = btnText.innerHTML;
+
+                    // عرض مؤشر التحميل
+                    this.classList.add('btn-loading');
+
+                    try {
+                        await copyToClipboard(duaText);
+
+                        // تغيير النص للإشارة إلى نجاح النسخ
+                        btnText.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+                        this.classList.remove('btn-loading');
+
+                        // إعادة النص الأصلي بعد ثانيتين
+                        setTimeout(() => {
+                            btnText.innerHTML = originalHtml;
+                        }, 2000);
+                    } catch (err) {
+                        // في حالة فشل النسخ
+                        btnText.innerHTML = '<i class="fas fa-times"></i> فشل النسخ';
+                        this.classList.remove('btn-loading');
+
+                        // إعادة النص الأصلي بعد ثانيتين
+                        setTimeout(() => {
+                            btnText.innerHTML = originalHtml;
+                        }, 2000);
+                    }
+                });
+            });
+
+            // أزرار الحفظ - استخدم الكود الشغال من الملف المرفق
+            document.querySelectorAll('.save-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const duaCard = this.closest('.dua-card');
+                    const btnText = this.querySelector('.btn-text');
+                    const originalHtml = btnText.innerHTML;
+
+                    // عرض مؤشر التحميل
+                    this.classList.add('btn-loading');
+
+                    // انتظار 3 ثوانِ ثم فتح نافذة اختيار الخلفية
+                    setTimeout(() => {
+                        this.classList.remove('btn-loading');
+
+                        // تفعيل نافذة اختيار الخلفية قبل الحفظ
+                        currentDuaForSharing = {
+                            text: duaCard.querySelector('h3').innerText,
+                            element: duaCard
+                        };
+                        currentAction = 'save';
+                        openBackgroundModal();
+                    }, 3000);
+                });
+            });
+        }
+
+        // فتح نافذة اختيار الخلفية
+        function openBackgroundModal() {
+            const modal = document.getElementById('background-modal');
+            const grid = document.getElementById('background-grid');
+            grid.innerHTML = ''; // Clear previous content
+
+            backgrounds.forEach((bg, index) => {
+                const bgItem = document.createElement('div');
+                bgItem.className = 'background-item';
+                // تحديد الخلفية المختارة حالياً
+                if (index === selectedBackground) {
+                    bgItem.classList.add('selected');
+                    bgItem.style.borderColor = '#046a38'; // Highlight selected
+                }
+
+                bgItem.innerHTML = `
+                    <div class="preview" style="background: ${bg.preview};"></div>
+                    <div class="name">${bg.name}</div>
+                `;
+
+                bgItem.addEventListener('click', () => {
+                    // إزالة التحديد من العنصر السابق
+                    document.querySelectorAll('.background-item').forEach(item => {
+                        item.classList.remove('selected');
+                        item.style.borderColor = 'transparent';
+                    });
+                    // تحديد العنصر الجديد
+                    bgItem.classList.add('selected');
+                    bgItem.style.borderColor = '#046a38';
+                    selectedBackground = index; // تحديث المتغير العام
+                });
+
+                grid.appendChild(bgItem);
+            });
+
+            modal.style.display = 'flex';
+        }
+
+        // إغلاق نافذة اختيار الخلفية
+        function closeBackgroundModal() {
+            document.getElementById('background-modal').style.display = 'none';
+            currentDuaForSharing = null;
+            currentAction = '';
+        }
+
+        // وظيفة لحفظ الصورة مع الخلفية المحددة - استخدام html2canvas
+        async function saveImageWithBackground(duaCard, backgroundIndex) {
+            // إنشاء نسخة مؤقتة من البطاقة للحفظ
+            const tempCard = duaCard.cloneNode(true);
+            tempCard.style.cssText = backgrounds[backgroundIndex].style;
+
+            // إزالة الأزرار من النسخة المؤقتة
+            const tempButtons = tempCard.querySelector('.dua-actions');
+            tempButtons.style.display = 'none';
+
+            // إضافة النسخة المؤقتة للصفحة (مخفية)
+            tempCard.style.position = 'absolute';
+            tempCard.style.left = '-9999px';
+            tempCard.style.top = '-9999px';
+            document.body.appendChild(tempCard);
+
+            // الحصول على زر الحفظ الأصلي للتحديث
+            const saveBtn = duaCard.querySelector('.save-btn');
+            const btnText = saveBtn.querySelector('.btn-text');
+            const originalHtml = btnText.innerHTML;
+
+            try {
+                // استخدام html2canvas لالتقاط الصورة من النسخة المؤقتة
+                const canvas = await html2canvas(tempCard, {
+                    backgroundColor: null,
+                    scale: 2,
+                    useCORS: true
+                });
+
+                // إنشاء رابط للتحميل
+                const link = document.createElement('a');
+                link.download = 'دعاء-قرآني.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                // تحديث زر الحفظ للإشارة إلى نجاح الحفظ
+                btnText.innerHTML = '<i class="fas fa-check"></i> تم الحفظ';
+
+                // إعادة النص الأصلي بعد ثانيتين
+                setTimeout(() => {
+                    btnText.innerHTML = originalHtml;
+                }, 2000);
+
+            } catch (err) {
+                console.error('خطأ في حفظ الصورة:', err);
+                btnText.innerHTML = '<i class="fas fa-times"></i> فشل الحفظ';
+
+                setTimeout(() => {
+                    btnText.innerHTML = originalHtml;
+                }, 2000);
+            } finally {
+                // إزالة النسخة المؤقتة
+                document.body.removeChild(tempCard);
+            }
+        }
+
+        // فتح نافذة جامع الدعاء
+        function openCollectiveModal() {
+            const modal = document.getElementById('collective-modal');
+            const content = document.getElementById('collective-prayers-content');
+
+            // تفريغ المحتوى السابق
+            content.innerHTML = '';
+
+            // إضافة جميع الأدعية
+            duas.forEach((dua, index) => {
+                const prayerDiv = document.createElement('div');
+                prayerDiv.className = 'collective-prayer-item';
+                prayerDiv.innerHTML = `
+                    <div class="collective-prayer-text">${dua.text}</div>
+                `;
+                content.appendChild(prayerDiv);
+            });
+
+            modal.style.display = 'flex';
+            // منع التمرير في الخلفية
+            document.body.style.overflow = 'hidden';
+        }
+
+        // إغلاق نافذة جامع الدعاء
+        function closeCollectiveModal() {
+            const modal = document.getElementById('collective-modal');
+            modal.style.display = 'none';
+            // إعادة تفعيل التمرير
+            document.body.style.overflow = 'auto';
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            // تحديث السنة تلقائياً
+           
+
+            displayDuas();
+
+            // معالجات أحداث البحث - بحث مباشر أثناء الكتابة
+            document.getElementById('search-btn').addEventListener('click', searchDuas);
+
+            // البحث عند الضغط على Enter
+            document.getElementById('search-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchDuas();
+                }
+            });
+
+            // البحث المباشر أثناء الكتابة
+            document.getElementById('search-input').addEventListener('input', searchDuas);
+
+            // معالجات أحداث نافذة اختيار الخلفية
+            document.getElementById('save-background-btn').addEventListener('click', () => {
+                if (currentDuaForSharing) {
+                    const duaCardElement = currentDuaForSharing.element;
+
+                    // حفظ الصورة باستخدام html2canvas
+                    if (currentAction === 'save') {
+                        saveImageWithBackground(duaCardElement, selectedBackground);
+                    }
+                }
+                closeBackgroundModal();
+            });
+
+            document.getElementById('cancel-background-btn').addEventListener('click', () => {
+                closeBackgroundModal();
+            });
+
+            // معالج حدث زر جامع الدعاء
+            document.getElementById('collective-prayer-btn').addEventListener('click', () => {
+                openCollectiveModal();
+            });
+
+            // معالج حدث إغلاق نافذة جامع الدعاء
+            document.getElementById('collective-close-btn').addEventListener('click', () => {
+                closeCollectiveModal();
+            });
+
+            // إغلاق النافذة عند الضغط خارجها
+            document.getElementById('collective-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'collective-modal') {
+                    closeCollectiveModal();
+                }
+            });
+        });
+    </script>
+
+    <!-- مكتبة html2canvas لالتقاط الشاشة -->
+    <script src="html2canvas.min.js"></script>
+</body>
+</html>
