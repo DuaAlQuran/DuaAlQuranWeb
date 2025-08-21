@@ -1083,12 +1083,11 @@
             // إنشاء حاوية خاصة للبطاقة المحفوظة
             const cardContainer = document.createElement('div');
             cardContainer.style.cssText = `
-                position: fixed;
-                left: -2000px;
-                top: -2000px;
+                position: absolute;
+                left: -9999px;
+                top: -9999px;
                 width: 500px;
                 min-height: 350px;
-                max-height: 600px;
                 padding: 30px;
                 font-family: 'Tajawal', sans-serif;
                 font-size: 20px;
@@ -1102,7 +1101,6 @@
                 justify-content: center;
                 align-items: center;
                 word-wrap: break-word;
-                overflow: hidden;
                 ${backgrounds[backgroundIndex].style}
             `;
 
@@ -1147,19 +1145,17 @@
 
             try {
                 // انتظار قصير للتأكد من رسم العناصر
-                await new Promise(resolve => setTimeout(resolve, 100));
+                await new Promise(resolve => setTimeout(resolve, 200));
 
                 // استخدام html2canvas لالتقاط الصورة
                 const canvas = await html2canvas(cardContainer, {
                     backgroundColor: null,
                     scale: 2,
                     useCORS: true,
-                    width: cardContainer.offsetWidth,
-                    height: cardContainer.offsetHeight,
+                    width: 500,
+                    height: Math.max(350, cardContainer.offsetHeight),
                     scrollX: 0,
-                    scrollY: 0,
-                    allowTaint: true,
-                    foreignObjectRendering: true
+                    scrollY: 0
                 });
 
                 // إنشاء رابط للتحميل
