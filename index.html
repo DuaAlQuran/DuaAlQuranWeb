@@ -1082,52 +1082,16 @@
         async function saveImageWithBackground(duaCard, backgroundIndex) {
             // إنشاء نسخة مؤقتة من البطاقة للحفظ
             const tempCard = duaCard.cloneNode(true);
-            
-            // تطبيق الخلفية المحددة مع إعدادات تصميم البطاقة
-            tempCard.style.cssText = backgrounds[backgroundIndex].style + `
-                width: 350px !important;
-                max-width: 350px !important;
-                min-width: 350px !important;
-                padding: 25px !important;
-                border-radius: 12px !important;
-                box-sizing: border-box !important;
-                display: block !important;
-                margin: 0 !important;
-                font-family: 'Tajawal', sans-serif !important;
-                direction: rtl !important;
-                text-align: center !important;
-                word-wrap: break-word !important;
-                overflow-wrap: break-word !important;
-                white-space: normal !important;
-            `;
-
-            // تنسيق النص داخل البطاقة
-            const tempText = tempCard.querySelector('h3');
-            if (tempText) {
-                tempText.style.cssText = `
-                    font-size: 1.4rem !important;
-                    line-height: 1.8 !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    word-wrap: break-word !important;
-                    overflow-wrap: break-word !important;
-                    white-space: normal !important;
-                    text-align: center !important;
-                    direction: rtl !important;
-                `;
-            }
+            tempCard.style.cssText = backgrounds[backgroundIndex].style;
 
             // إزالة الأزرار من النسخة المؤقتة
             const tempButtons = tempCard.querySelector('.dua-actions');
-            if (tempButtons) {
-                tempButtons.style.display = 'none';
-            }
+            tempButtons.style.display = 'none';
 
-            // إضافة النسخة المؤقتة للصفحة (مخفية ولكن محددة الأبعاد)
+            // إضافة النسخة المؤقتة للصفحة (مخفية)
             tempCard.style.position = 'absolute';
             tempCard.style.left = '-9999px';
             tempCard.style.top = '-9999px';
-            tempCard.style.visibility = 'hidden';
             document.body.appendChild(tempCard);
 
             // الحصول على زر الحفظ الأصلي للتحديث
@@ -1136,17 +1100,11 @@
             const originalHtml = btnText.innerHTML;
 
             try {
-                // انتظار قصير للتأكد من تطبيق الستايلات
-                await new Promise(resolve => setTimeout(resolve, 100));
-
                 // استخدام html2canvas لالتقاط الصورة من النسخة المؤقتة
                 const canvas = await html2canvas(tempCard, {
                     backgroundColor: null,
                     scale: 2,
-                    useCORS: true,
-                    allowTaint: true,
-                    width: 350,
-                    height: tempCard.offsetHeight || 200
+                    useCORS: true
                 });
 
                 // إنشاء رابط للتحميل
@@ -1219,7 +1177,7 @@
                 downloadBtn.classList.remove('loading');
 
                 // يمكنك تغيير هذا الرابط إلى رابط التحميل الفعلي للتطبيق
-                window.open('https://play.google.com/store/apps', '_blank');
+                window.open('https://duaalquran.github.io/DuaAlQuranWeb/DuaAlQuran.apk', '_blank');
 
                 // أو استخدم رابط مباشر للتطبيق
                 // window.open('رابط-تحميل-التطبيق', '_blank');
