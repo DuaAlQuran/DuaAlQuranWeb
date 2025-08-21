@@ -1083,24 +1083,26 @@
             // إنشاء حاوية خاصة للبطاقة المحفوظة
             const cardContainer = document.createElement('div');
             cardContainer.style.cssText = `
-                position: absolute;
-                left: -9999px;
-                top: -9999px;
-                width: 600px;
-                min-height: 400px;
-                padding: 40px;
+                position: fixed;
+                left: -2000px;
+                top: -2000px;
+                width: 500px;
+                min-height: 350px;
+                max-height: 600px;
+                padding: 30px;
                 font-family: 'Tajawal', sans-serif;
-                font-size: 24px;
-                line-height: 2.2;
+                font-size: 20px;
+                line-height: 2.0;
                 text-align: center;
-                border-radius: 20px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                border-radius: 15px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
                 direction: rtl;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 word-wrap: break-word;
+                overflow: hidden;
                 ${backgrounds[backgroundIndex].style}
             `;
 
@@ -1109,37 +1111,29 @@
             const textElement = document.createElement('div');
             textElement.style.cssText = `
                 width: 100%;
-                max-width: 520px;
+                max-width: 440px;
                 word-wrap: break-word;
                 overflow-wrap: break-word;
                 hyphens: auto;
                 white-space: pre-wrap;
                 font-weight: 600;
                 margin: auto;
+                text-align: center;
+                line-height: 1.8;
             `;
             textElement.textContent = duaText;
 
-            // إضافة زخرفة إسلامية في الأعلى
-            const topDecoration = document.createElement('div');
-            topDecoration.style.cssText = `
-                font-size: 40px;
-                margin-bottom: 30px;
-                opacity: 0.7;
-            `;
-            topDecoration.innerHTML = '۞';
-
-            // إضافة زخرفة في الأسفل
+            // إضافة زخرفة في الأسفل فقط
             const bottomDecoration = document.createElement('div');
             bottomDecoration.style.cssText = `
-                font-size: 18px;
-                margin-top: 30px;
+                font-size: 16px;
+                margin-top: 25px;
                 opacity: 0.8;
                 font-style: italic;
             `;
             bottomDecoration.innerHTML = 'أدعية القرآن الكريم';
 
-            // تجميع العناصر
-            cardContainer.appendChild(topDecoration);
+            // تجميع العناصر (بدون النجمة)
             cardContainer.appendChild(textElement);
             cardContainer.appendChild(bottomDecoration);
 
@@ -1160,10 +1154,12 @@
                     backgroundColor: null,
                     scale: 2,
                     useCORS: true,
-                    width: 600,
-                    height: Math.max(400, cardContainer.offsetHeight),
+                    width: cardContainer.offsetWidth,
+                    height: cardContainer.offsetHeight,
                     scrollX: 0,
-                    scrollY: 0
+                    scrollY: 0,
+                    allowTaint: true,
+                    foreignObjectRendering: true
                 });
 
                 // إنشاء رابط للتحميل
