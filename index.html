@@ -1104,22 +1104,23 @@
                 ${backgrounds[backgroundIndex].style}
             `;
 
-            // إضافة النص مع تحسينات
+      // إضافة النص مع تحسينات
             const duaText = duaCard.querySelector('h3').innerText;
             const textElement = document.createElement('div');
             textElement.style.cssText = `
                 width: auto%;
-                max-width: auto%;
+                max-width: 440px;
                 word-wrap: break-word;
                 overflow-wrap: break-word;
                 hyphens: auto;
                 white-space: pre-wrap;
-                font-weight: auto%;
-                margin: 600px;
+                font-weight: 600;
+                margin: auto;
                 text-align: center;
                 line-height: 1.8;
             `;
             textElement.textContent = duaText;
+
 
             // إضافة زخرفة في الأسفل فقط
             const bottomDecoration = document.createElement('div');
