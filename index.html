@@ -1078,21 +1078,73 @@
             currentAction = '';
         }
 
-        // وظيفة لحفظ الصورة مع الخلفية المحددة - استخدام html2canvas
+        // وظيفة لحفظ الصورة مع الخلفية المحددة - بطاقة جميلة
         async function saveImageWithBackground(duaCard, backgroundIndex) {
-            // إنشاء نسخة مؤقتة من البطاقة للحفظ
-            const tempCard = duaCard.cloneNode(true);
-            tempCard.style.cssText = backgrounds[backgroundIndex].style;
+            // إنشاء حاوية خاصة للبطاقة المحفوظة
+            const cardContainer = document.createElement('div');
+            cardContainer.style.cssText = `
+                position: absolute;
+                left: -9999px;
+                top: -9999px;
+                width: 600px;
+                min-height: 400px;
+                padding: 40px;
+                font-family: 'Tajawal', sans-serif;
+                font-size: 24px;
+                line-height: 2.2;
+                text-align: center;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                direction: rtl;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                word-wrap: break-word;
+                ${backgrounds[backgroundIndex].style}
+            `;
 
-            // إزالة الأزرار من النسخة المؤقتة
-            const tempButtons = tempCard.querySelector('.dua-actions');
-            tempButtons.style.display = 'none';
+            // إضافة النص مع تحسينات
+            const duaText = duaCard.querySelector('h3').innerText;
+            const textElement = document.createElement('div');
+            textElement.style.cssText = `
+                width: 100%;
+                max-width: 520px;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+                white-space: pre-wrap;
+                font-weight: 600;
+                margin: auto;
+            `;
+            textElement.textContent = duaText;
 
-            // إضافة النسخة المؤقتة للصفحة (مخفية)
-            tempCard.style.position = 'absolute';
-            tempCard.style.left = '-9999px';
-            tempCard.style.top = '-9999px';
-            document.body.appendChild(tempCard);
+            // إضافة زخرفة إسلامية في الأعلى
+            const topDecoration = document.createElement('div');
+            topDecoration.style.cssText = `
+                font-size: 40px;
+                margin-bottom: 30px;
+                opacity: 0.7;
+            `;
+            topDecoration.innerHTML = '۞';
+
+            // إضافة زخرفة في الأسفل
+            const bottomDecoration = document.createElement('div');
+            bottomDecoration.style.cssText = `
+                font-size: 18px;
+                margin-top: 30px;
+                opacity: 0.8;
+                font-style: italic;
+            `;
+            bottomDecoration.innerHTML = 'أدعية القرآن الكريم';
+
+            // تجميع العناصر
+            cardContainer.appendChild(topDecoration);
+            cardContainer.appendChild(textElement);
+            cardContainer.appendChild(bottomDecoration);
+
+            // إضافة البطاقة للصفحة
+            document.body.appendChild(cardContainer);
 
             // الحصول على زر الحفظ الأصلي للتحديث
             const saveBtn = duaCard.querySelector('.save-btn');
@@ -1100,17 +1152,24 @@
             const originalHtml = btnText.innerHTML;
 
             try {
-                // استخدام html2canvas لالتقاط الصورة من النسخة المؤقتة
-                const canvas = await html2canvas(tempCard, {
+                // انتظار قصير للتأكد من رسم العناصر
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // استخدام html2canvas لالتقاط الصورة
+                const canvas = await html2canvas(cardContainer, {
                     backgroundColor: null,
                     scale: 2,
-                    useCORS: true
+                    useCORS: true,
+                    width: 600,
+                    height: Math.max(400, cardContainer.offsetHeight),
+                    scrollX: 0,
+                    scrollY: 0
                 });
 
                 // إنشاء رابط للتحميل
                 const link = document.createElement('a');
                 link.download = 'دعاء-قرآني.png';
-                link.href = canvas.toDataURL('image/png');
+                link.href = canvas.toDataURL('image/png', 0.95);
                 link.click();
 
                 // تحديث زر الحفظ للإشارة إلى نجاح الحفظ
@@ -1129,8 +1188,8 @@
                     btnText.innerHTML = originalHtml;
                 }, 2000);
             } finally {
-                // إزالة النسخة المؤقتة
-                document.body.removeChild(tempCard);
+                // إزالة البطاقة المؤقتة
+                document.body.removeChild(cardContainer);
             }
         }
 
