@@ -633,7 +633,7 @@
     </footer>
 
     <script>
-            // بيانات الأدعية
+        // بيانات الأدعية
     const duas = [
     {
         text: "﴿ ربنا تقبل منا إنك أنت السميع العليم ﴾",
@@ -1097,66 +1097,21 @@
             currentAction = '';
         }
 
-        // وظيفة لحفظ الصورة مع الخلفية المحددة - بطاقة جميلة
+        // وظيفة لحفظ الصورة مع الخلفية المحددة - استخدام html2canvas
         async function saveImageWithBackground(duaCard, backgroundIndex) {
-            // إنشاء حاوية خاصة للبطاقة المحفوظة
-            const cardContainer = document.createElement('div');
-            cardContainer.style.cssText = `
-                position: absolute;
-                left: -9999px;
-                top: -9999px;
-                width: auto%;
-                min-height: auto%;
-                padding: 30px;
-                font-family: 'Tajawal', sans-serif;
-                font-size: 20px;
-                line-height: 2.0;
-                text-align: center;
-                border-radius: 15px;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-                direction: rtl;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                word-wrap: break-word;
-                ${backgrounds[backgroundIndex].style}
-            `;
+            // إنشاء نسخة مؤقتة من البطاقة للحفظ
+            const tempCard = duaCard.cloneNode(true);
+            tempCard.style.cssText = backgrounds[backgroundIndex].style;
 
-      // إضافة النص مع تحسينات
-            const duaText = duaCard.querySelector('h3').innerText;
-            const textElement = document.createElement('div');
-            textElement.style.cssText = `
-                width: auto%;
-                max-width: 440px;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
-                hyphens: auto;
-                white-space: pre-wrap;
-                font-weight: 600;
-                margin: auto;
-                text-align: center;
-                line-height: 1.8;
-            `;
-            textElement.textContent = duaText;
+            // إزالة الأزرار من النسخة المؤقتة
+            const tempButtons = tempCard.querySelector('.dua-actions');
+            tempButtons.style.display = 'none';
 
-
-            // إضافة زخرفة في الأسفل فقط
-            const bottomDecoration = document.createElement('div');
-            bottomDecoration.style.cssText = `
-                font-size: 16px;
-                margin-top: 25px;
-                opacity: 0.8;
-                font-style: italic;
-            `;
-            bottomDecoration.innerHTML = 'أدعية القرآن الكريم';
-
-            // تجميع العناصر (بدون النجمة)
-            cardContainer.appendChild(textElement);
-            cardContainer.appendChild(bottomDecoration);
-
-            // إضافة البطاقة للصفحة
-            document.body.appendChild(cardContainer);
+            // إضافة النسخة المؤقتة للصفحة (مخفية)
+            tempCard.style.position = 'absolute';
+            tempCard.style.left = '-9999px';
+            tempCard.style.top = '-9999px';
+            document.body.appendChild(tempCard);
 
             // الحصول على زر الحفظ الأصلي للتحديث
             const saveBtn = duaCard.querySelector('.save-btn');
@@ -1164,24 +1119,17 @@
             const originalHtml = btnText.innerHTML;
 
             try {
-                // انتظار قصير للتأكد من رسم العناصر
-                await new Promise(resolve => setTimeout(resolve, 200));
-
-                // استخدام html2canvas لالتقاط الصورة
-                const canvas = await html2canvas(cardContainer, {
+                // استخدام html2canvas لالتقاط الصورة من النسخة المؤقتة
+                const canvas = await html2canvas(tempCard, {
                     backgroundColor: null,
                     scale: 2,
-                    useCORS: true,
-                    width: 500,
-                    height: Math.max(350, cardContainer.offsetHeight),
-                    scrollX: 0,
-                    scrollY: 0
+                    useCORS: true
                 });
 
                 // إنشاء رابط للتحميل
                 const link = document.createElement('a');
                 link.download = 'دعاء-قرآني.png';
-                link.href = canvas.toDataURL('image/png', 0.95);
+                link.href = canvas.toDataURL('image/png');
                 link.click();
 
                 // تحديث زر الحفظ للإشارة إلى نجاح الحفظ
@@ -1200,8 +1148,8 @@
                     btnText.innerHTML = originalHtml;
                 }, 2000);
             } finally {
-                // إزالة البطاقة المؤقتة
-                document.body.removeChild(cardContainer);
+                // إزالة النسخة المؤقتة
+                document.body.removeChild(tempCard);
             }
         }
 
@@ -1248,7 +1196,7 @@
                 downloadBtn.classList.remove('loading');
 
                 // يمكنك تغيير هذا الرابط إلى رابط التحميل الفعلي للتطبيق
-                window.open('https://duaalquran.github.io/DuaAlQuranWeb/DuaAlQuran.apk', '_blank');
+                window.open('QORAN/app/DuaAlQuran.apk', '_blank');
 
                 // أو استخدم رابط مباشر للتطبيق
                 // window.open('رابط-تحميل-التطبيق', '_blank');
