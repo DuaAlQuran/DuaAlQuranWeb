@@ -7,8 +7,8 @@
     <title>أدعية القرآن الكريم</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@200;300;400;500;600;700;800;900&family=Scheherazade+New:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@200;300;400;500;600;700;800;900&family=Scheherazade+New:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
     <style>
         /* ================== الأساسيات والمتغيرات ================== */
         :root {
@@ -17,13 +17,9 @@
             --cosmic-purple: #2d1b69;
             --cosmic-pink: #ff6b9d;
             --cosmic-gold: #ffd700;
-            --aurora-green: #00ff88;
-            --aurora-blue: #00d4ff;
-            --aurora-purple: #d400ff;
-            --star-white: #ffffff;
-            --moon-silver: #c0c0c0;
-            --cloud-white: rgba(255, 255, 255, 0.8);
-            --lightning-yellow: #ffff00;
+            --text-white: #ffffff;
+            --accent-blue: #00d4ff;
+            --accent-purple: #d400ff;
             --cosmic-glow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
@@ -45,7 +41,7 @@
             width: 100%;
             font-family: 'Cairo', 'Amiri', serif;
             background: var(--cosmic-deep);
-            color: var(--star-white);
+            color: var(--text-white);
             position: relative;
         }
 
@@ -68,15 +64,6 @@
                 scroll-behavior: auto !important;
             }
 
-            .cosmic-canvas,
-            .star,
-            .moon,
-            .aurora,
-            .cloud,
-            .lightning,
-            .particle {
-                animation: none !important;
-            }
 
             .cosmic-title,
             .cosmic-subtitle {
@@ -87,553 +74,14 @@
             }
         }
 
-        /* ================== الخلفية الكونية المتحركة ================== */
-        .cosmic-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg,
-                    var(--cosmic-deep) 0%,
-                    var(--cosmic-blue) 25%,
-                    var(--cosmic-purple) 50%,
-                    #1a0040 75%,
-                    var(--cosmic-deep) 100%);
-            animation: cosmicShift 20s ease-in-out infinite alternate;
-        }
 
-        @keyframes cosmicShift {
-            0% {
-                background: linear-gradient(45deg,
-                        var(--cosmic-deep) 0%,
-                        var(--cosmic-blue) 25%,
-                        var(--cosmic-purple) 50%,
-                        #1a0040 75%,
-                        var(--cosmic-deep) 100%);
-            }
 
-            50% {
-                background: linear-gradient(135deg,
-                        #2d1b69 0%,
-                        #0a0a23 25%,
-                        #4a0080 50%,
-                        var(--cosmic-blue) 75%,
-                        var(--cosmic-deep) 100%);
-            }
 
-            100% {
-                background: linear-gradient(225deg,
-                        var(--cosmic-deep) 0%,
-                        #1a0040 25%,
-                        var(--cosmic-purple) 50%,
-                        var(--cosmic-blue) 75%,
-                        var(--cosmic-deep) 100%);
-            }
-        }
 
-        /* ================== النجوم المتحركة ================== */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
 
-        .star {
-            position: absolute;
-            background: var(--star-white);
-            border-radius: 50%;
-            animation: starTwinkle 3s ease-in-out infinite alternate;
-        }
 
-        .star.small {
-            width: 2px;
-            height: 2px;
-            box-shadow: 0 0 6px var(--star-white);
-        }
 
-        .star.medium {
-            width: 3px;
-            height: 3px;
-            box-shadow: 0 0 12px var(--star-white);
-            animation-duration: 2s;
-        }
-
-        .star.large {
-            width: 4px;
-            height: 4px;
-            box-shadow: 0 0 20px var(--cosmic-gold);
-            animation-duration: 4s;
-        }
-
-        .star.constellation {
-            width: 6px;
-            height: 6px;
-            background: var(--cosmic-gold);
-            box-shadow: 0 0 30px var(--cosmic-gold);
-            animation: constellationPulse 5s ease-in-out infinite;
-        }
-
-        @keyframes starTwinkle {
-            0% {
-                opacity: 0.3;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-
-            100% {
-                opacity: 0.5;
-                transform: scale(0.8);
-            }
-        }
-
-        @keyframes constellationPulse {
-
-            0%,
-            100% {
-                opacity: 0.8;
-                transform: scale(1) rotate(0deg);
-                box-shadow: 0 0 30px var(--cosmic-gold);
-            }
-
-            25% {
-                opacity: 1;
-                transform: scale(1.5) rotate(90deg);
-                box-shadow: 0 0 60px var(--cosmic-gold), 0 0 90px var(--cosmic-pink);
-            }
-
-            50% {
-                opacity: 0.9;
-                transform: scale(1.2) rotate(180deg);
-                box-shadow: 0 0 45px var(--aurora-blue);
-            }
-
-            75% {
-                opacity: 1;
-                transform: scale(1.8) rotate(270deg);
-                box-shadow: 0 0 75px var(--aurora-purple);
-            }
-        }
-
-        /* ================== القمر والشمس ================== */
-        .celestial-bodies {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .moon {
-            position: absolute;
-            top: 10%;
-            right: 10%;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle at 30% 30%,
-                    var(--star-white) 0%,
-                    var(--moon-silver) 50%,
-                    #999 100%);
-            border-radius: 50%;
-            box-shadow:
-                0 0 50px rgba(255, 255, 255, 0.8),
-                inset -20px -20px 0 rgba(0, 0, 0, 0.2);
-            animation: moonFloat 15s ease-in-out infinite;
-        }
-
-        .moon::before {
-            content: '';
-            position: absolute;
-            top: 20%;
-            left: 30%;
-            width: 15px;
-            height: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 50%;
-        }
-
-        .moon::after {
-            content: '';
-            position: absolute;
-            bottom: 30%;
-            right: 25%;
-            width: 10px;
-            height: 10px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 50%;
-        }
-
-        @keyframes moonFloat {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-                box-shadow: 0 0 50px rgba(255, 255, 255, 0.8);
-            }
-
-            25% {
-                transform: translateY(-20px) rotate(90deg);
-                box-shadow: 0 0 80px rgba(255, 255, 255, 1);
-            }
-
-            50% {
-                transform: translateY(-30px) rotate(180deg);
-                box-shadow: 0 0 100px var(--cosmic-gold);
-            }
-
-            75% {
-                transform: translateY(-10px) rotate(270deg);
-                box-shadow: 0 0 60px var(--aurora-blue);
-            }
-        }
-
-        /* ================== الشفق القطبي ================== */
-        .aurora {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.6;
-            animation: auroraMove 25s ease-in-out infinite;
-        }
-
-        .aurora::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg,
-                    transparent 0%,
-                    var(--aurora-green) 20%,
-                    transparent 40%,
-                    var(--aurora-blue) 60%,
-                    transparent 80%,
-                    var(--aurora-purple) 90%,
-                    transparent 100%);
-            filter: blur(3px);
-            animation: auroraWave 12s ease-in-out infinite alternate;
-        }
-
-        .aurora::after {
-            content: '';
-            position: absolute;
-            top: 20%;
-            left: 0;
-            width: 100%;
-            height: 60%;
-            background: linear-gradient(90deg,
-                    transparent 0%,
-                    rgba(0, 255, 136, 0.3) 25%,
-                    rgba(0, 212, 255, 0.3) 50%,
-                    rgba(212, 0, 255, 0.3) 75%,
-                    transparent 100%);
-            filter: blur(5px);
-            animation: auroraWave2 18s ease-in-out infinite alternate-reverse;
-        }
-
-        @keyframes auroraMove {
-
-            0%,
-            100% {
-                transform: translateX(0) skew(0deg, 2deg);
-            }
-
-            25% {
-                transform: translateX(50px) skew(2deg, 0deg);
-            }
-
-            50% {
-                transform: translateX(-30px) skew(-1deg, 3deg);
-            }
-
-            75% {
-                transform: translateX(20px) skew(1deg, -1deg);
-            }
-        }
-
-        @keyframes auroraWave {
-            0% {
-                opacity: 0.3;
-                transform: scaleY(1) rotate(0deg);
-            }
-
-            50% {
-                opacity: 0.8;
-                transform: scaleY(1.5) rotate(1deg);
-            }
-
-            100% {
-                opacity: 0.4;
-                transform: scaleY(0.8) rotate(-1deg);
-            }
-        }
-
-        @keyframes auroraWave2 {
-            0% {
-                opacity: 0.4;
-                transform: scaleX(1) rotate(0deg);
-            }
-
-            50% {
-                opacity: 0.7;
-                transform: scaleX(1.2) rotate(-1deg);
-            }
-
-            100% {
-                opacity: 0.3;
-                transform: scaleX(0.9) rotate(1deg);
-            }
-        }
-
-        /* ================== السحب المتحركة ================== */
-        .clouds {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .cloud {
-            position: absolute;
-            background: var(--cloud-white);
-            border-radius: 50px;
-            opacity: 0.4;
-            animation: cloudFloat 30s linear infinite;
-        }
-
-        .cloud::before,
-        .cloud::after {
-            content: '';
-            position: absolute;
-            background: var(--cloud-white);
-            border-radius: 50px;
-        }
-
-        .cloud.cloud1 {
-            width: 100px;
-            height: 40px;
-            top: 20%;
-            left: -10%;
-            animation-duration: 25s;
-        }
-
-        .cloud.cloud1::before {
-            width: 50px;
-            height: 50px;
-            top: -25px;
-            left: 10px;
-        }
-
-        .cloud.cloud1::after {
-            width: 60px;
-            height: 30px;
-            top: -15px;
-            right: 10px;
-        }
-
-        .cloud.cloud2 {
-            width: 80px;
-            height: 30px;
-            top: 40%;
-            left: -8%;
-            animation-duration: 35s;
-            animation-delay: -10s;
-        }
-
-        .cloud.cloud2::before {
-            width: 40px;
-            height: 40px;
-            top: -20px;
-            left: 15px;
-        }
-
-        .cloud.cloud2::after {
-            width: 50px;
-            height: 25px;
-            top: -10px;
-            right: 15px;
-        }
-
-        .cloud.cloud3 {
-            width: 120px;
-            height: 50px;
-            top: 15%;
-            left: -12%;
-            animation-duration: 40s;
-            animation-delay: -20s;
-        }
-
-        .cloud.cloud3::before {
-            width: 60px;
-            height: 60px;
-            top: -30px;
-            left: 20px;
-        }
-
-        .cloud.cloud3::after {
-            width: 70px;
-            height: 35px;
-            top: -20px;
-            right: 20px;
-        }
-
-        @keyframes cloudFloat {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(calc(100vw + 200px));
-            }
-        }
-
-        /* ================== البرق والرعد ================== */
-        .lightning {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0;
-            animation: lightningStrike 10s ease-in-out infinite;
-        }
-
-        .lightning::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 30%;
-            width: 3px;
-            height: 40%;
-            background: linear-gradient(to bottom,
-                    var(--lightning-yellow) 0%,
-                    transparent 20%,
-                    var(--lightning-yellow) 30%,
-                    transparent 50%,
-                    var(--lightning-yellow) 60%,
-                    transparent 80%,
-                    var(--lightning-yellow) 100%);
-            box-shadow: 0 0 20px var(--lightning-yellow);
-            transform: rotate(15deg);
-        }
-
-        .lightning::after {
-            content: '';
-            position: absolute;
-            top: 15%;
-            right: 40%;
-            width: 2px;
-            height: 35%;
-            background: linear-gradient(to bottom,
-                    var(--lightning-yellow) 0%,
-                    transparent 25%,
-                    var(--lightning-yellow) 40%,
-                    transparent 65%,
-                    var(--lightning-yellow) 100%);
-            box-shadow: 0 0 15px var(--lightning-yellow);
-            transform: rotate(-20deg);
-        }
-
-        @keyframes lightningStrike {
-
-            0%,
-            85%,
-            100% {
-                opacity: 0;
-            }
-
-            87%,
-            89%,
-            91% {
-                opacity: 1;
-                box-shadow: 0 0 100px var(--lightning-yellow);
-            }
-
-            88%,
-            90% {
-                opacity: 0;
-            }
-        }
-
-        /* ================== نظام الجسيمات ================== */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--cosmic-gold);
-            border-radius: 50%;
-            box-shadow: 0 0 6px var(--cosmic-gold);
-            animation: particleFloat 15s linear infinite;
-        }
-
-        .particle.energy {
-            background: var(--aurora-green);
-            box-shadow: 0 0 10px var(--aurora-green);
-            animation-duration: 20s;
-        }
-
-        .particle.magic {
-            background: var(--cosmic-pink);
-            box-shadow: 0 0 8px var(--cosmic-pink);
-            animation-duration: 12s;
-        }
-
-        .particle.cosmic {
-            background: var(--aurora-purple);
-            box-shadow: 0 0 12px var(--aurora-purple);
-            animation-duration: 18s;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-100px) translateX(200px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* ================== الهيدر الكوني ================== */
+        /* ================== الهيدر  ================== */
         .cosmic-header {
             position: relative;
             background: linear-gradient(135deg,
@@ -677,8 +125,8 @@
             font-weight: 700;
             background: linear-gradient(45deg,
                     var(--cosmic-gold) 0%,
-                    var(--star-white) 25%,
-                    var(--aurora-blue) 50%,
+                    var(--text-white) 25%,
+        var(--accent-blue) 50%,
                     var(--cosmic-pink) 75%,
                     var(--cosmic-gold) 100%);
             background-size: 300% 300%;
@@ -706,7 +154,7 @@
 
         .cosmic-subtitle {
             font-size: 1.3rem;
-            color: var(--aurora-blue);
+            color: var(--accent-blue);
             margin-bottom: 30px;
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
             animation: subtitleGlow 3s ease-in-out infinite alternate;
@@ -714,17 +162,17 @@
 
         @keyframes subtitleGlow {
             0% {
-                color: var(--aurora-blue);
+                color: var(--accent-blue);
                 text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
             }
 
             100% {
-                color: var(--aurora-green);
+                color: var(--accent-blue);
                 text-shadow: 0 0 20px rgba(0, 255, 136, 0.7);
             }
         }
 
-        /* ================== البحث الكوني ================== */
+        /* ================== البحث  ================== */
         .cosmic-search {
             position: relative;
             max-width: 600px;
@@ -772,7 +220,7 @@
             border: none;
             border-radius: 50px;
             background: transparent;
-            color: var(--star-white);
+            color: var(--text-white);
             font-size: 1.1rem;
             font-family: 'Cairo', sans-serif;
             outline: none;
@@ -788,10 +236,10 @@
             padding: 12px 25px;
             background: linear-gradient(45deg,
                     var(--cosmic-gold) 0%,
-                    var(--aurora-blue) 100%);
+        var(--accent-blue) 100%);
             border: none;
             border-radius: 50px;
-            color: var(--star-white);
+            color: var(--text-white);
             font-weight: bold;
             font-size: 1rem;
             cursor: pointer;
@@ -803,7 +251,7 @@
 
         .cosmic-search button:hover {
             background: linear-gradient(45deg,
-                    var(--aurora-green) 0%,
+        var(--accent-blue) 0%,
                     var(--cosmic-pink) 100%);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
@@ -819,11 +267,11 @@
             padding: 15px 40px;
             background: linear-gradient(135deg,
                     var(--cosmic-purple) 0%,
-                    var(--aurora-purple) 50%,
+        var(--accent-purple) 50%,
                     var(--cosmic-pink) 100%);
             border: none;
             border-radius: 30px;
-            color: var(--star-white);
+            color: var(--text-white);
             font-weight: bold;
             font-size: 1.2rem;
             cursor: pointer;
@@ -855,7 +303,7 @@
                 0 15px 50px rgba(212, 0, 255, 0.6),
                 0 0 40px rgba(255, 107, 157, 0.5);
             background: linear-gradient(135deg,
-                    var(--aurora-purple) 0%,
+        var(--accent-purple) 0%,
                     var(--cosmic-pink) 50%,
                     var(--cosmic-gold) 100%);
         }
@@ -933,7 +381,7 @@
             font-family: 'Scheherazade New', 'Amiri', serif;
             font-size: 1.6rem;
             line-height: 2;
-            color: var(--star-white);
+            color: var(--text-white);
             text-align: center;
             margin-bottom: 25px;
             position: relative;
@@ -1008,13 +456,13 @@
         .cosmic-btn.copy {
             background: linear-gradient(45deg,
                     var(--cosmic-blue) 0%,
-                    var(--aurora-blue) 100%);
-            color: var(--star-white);
+        var(--accent-blue) 100%);
+            color: var(--text-white);
         }
 
         .cosmic-btn.copy:hover {
             background: linear-gradient(45deg,
-                    var(--aurora-blue) 0%,
+        var(--accent-blue) 0%,
                     var(--cosmic-gold) 100%);
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
@@ -1024,7 +472,7 @@
             background: linear-gradient(45deg,
                     var(--cosmic-purple) 0%,
                     var(--cosmic-pink) 100%);
-            color: var(--star-white);
+            color: var(--text-white);
         }
 
         .cosmic-btn.save:hover {
@@ -1053,7 +501,7 @@
             width: 20px;
             height: 20px;
             border: 3px solid transparent;
-            border-top-color: var(--star-white);
+            border-top-color: var(--text-white);
             border-radius: 50%;
             animation: cosmicSpin 1s linear infinite;
         }
@@ -1139,7 +587,7 @@
             font-weight: 700;
             background: linear-gradient(45deg,
                     var(--cosmic-gold) 0%,
-                    var(--aurora-blue) 50%,
+        var(--accent-blue) 50%,
                     var(--cosmic-pink) 100%);
             background-size: 200% 200%;
             -webkit-background-clip: text;
@@ -1160,7 +608,7 @@
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            color: var(--star-white);
+            color: var(--text-white);
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1216,7 +664,7 @@
 
         .cosmic-footer-text {
             font-size: 1.1rem;
-            color: var(--aurora-blue);
+            color: var(--accent-blue);
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
             position: relative;
             z-index: 2;
@@ -1225,61 +673,6 @@
         /* ================== التصميم المتجاوب - تحسينات الأداء الجذرية ================== */
         @media (max-width: 768px) {
 
-            /* تعطيل الرسوم المتحركة المعقدة على الموبايل */
-            .cosmic-canvas {
-                animation: none !important;
-                background: var(--cosmic-deep) !important;
-            }
-
-            /* تعطيل البرق تماماً على الموبايل */
-            .lightning {
-                display: none !important;
-            }
-
-            /* تقليل تأثيرات الشفق القطبي بشكل جذري */
-            .aurora {
-                opacity: 0.15 !important;
-                animation: none !important;
-            }
-
-            .aurora::before,
-            .aurora::after {
-                filter: blur(1px) !important;
-                animation: none !important;
-            }
-
-            /* تبسيط حركة السحب */
-            .cloud {
-                transform: scale(0.5);
-                opacity: 0.2;
-                animation-duration: 120s !important;
-                /* إبطاء شديد */
-            }
-
-            /* تبسيط حركة القمر */
-            .moon {
-                width: 50px;
-                height: 50px;
-                top: 3%;
-                right: 3%;
-                animation-duration: 60s !important;
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.5) !important;
-            }
-
-            /* تحسين أداء الجسيمات */
-            .particle {
-                animation-duration: 40s !important;
-                opacity: 0.6 !important;
-            }
-
-            /* تحسين النجوم */
-            .star {
-                animation-duration: 6s !important;
-            }
-
-            .star.constellation {
-                animation: starTwinkle 8s ease-in-out infinite alternate !important;
-            }
 
             /* تحسين العناصر التفاعلية */
             .cosmic-title {
@@ -1429,12 +822,6 @@
             will-change: auto;
         }
 
-        /* ================== تأثيرات التمرير ================== */
-        .parallax-star {
-            position: fixed;
-            pointer-events: none;
-            z-index: -1;
-        }
 
         /* ================== تأثير الانطلاق عند التحميل ================== */
         .cosmic-dua-card {
@@ -1477,614 +864,470 @@
 </head>
 
 <body>
-    <!-- الخلفية الكونية -->
-    <div class="cosmic-canvas"></div>
 
-    <!-- النجوم -->
-    <div class="stars" id="stars"></div>
+<!-- الهيدر الكوني -->
+<header class="cosmic-header">
+    <h1 class="cosmic-title"> أدعية القرآن الكريم </h1>
 
-    <!-- الأجرام السماوية -->
-    <div class="celestial-bodies">
-        <div class="moon"></div>
+
+    <!-- البحث الكوني -->
+    <div class="cosmic-search">
+        <input type="text" id="cosmic-search-input" placeholder="ابحث في الأدعية ">
+        <button id="cosmic-search-btn">
+            <i class="fas fa-search"></i> بحث
+        </button>
     </div>
 
-    <!-- الشفق القطبي -->
-    <div class="aurora"></div>
-
-    <!-- السحب -->
-    <div class="clouds">
-        <div class="cloud cloud1"></div>
-        <div class="cloud cloud2"></div>
-        <div class="cloud cloud3"></div>
+    <!-- زر جامع الدعاء -->
+    <div class="collective-prayer-cosmic">
+        <button id="collective-cosmic-btn" class="collective-btn-cosmic">
+جامع الدعاء
+        </button>
     </div>
+</header>
 
-    <!-- البرق -->
-    <div class="lightning"></div>
+<!-- المحتوى الرئيسي -->
+<main class="cosmic-container">
+    <div class="cosmic-grid" id="cosmic-duas-container">
+        <!-- سيتم ملؤه بالأدعية -->
+    </div>
+</main>
 
-    <!-- نظام الجسيمات -->
-    <div class="particles" id="particles"></div>
-
-    <!-- الهيدر الكوني -->
-    <header class="cosmic-header">
-        <h1 class="cosmic-title">✨ أدعية القرآن الكريم ✨</h1>
-
-
-        <!-- البحث الكوني -->
-        <div class="cosmic-search">
-            <input type="text" id="cosmic-search-input" placeholder="ابحث في رحاب الأدعية القرآنية...">
-            <button id="cosmic-search-btn">
-                <i class="fas fa-search"></i> بحث
-            </button>
+<!-- نافذة جامع الدعاء الكونية -->
+<div class="cosmic-modal" id="collective-cosmic-modal">
+    <div class="cosmic-modal-content">
+        <button class="cosmic-close-btn" id="collective-close-cosmic">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="cosmic-modal-header">
+            <h2 class="cosmic-modal-title">جامع الدعاء </h2>
         </div>
-
-        <!-- زر جامع الدعاء -->
-        <div class="collective-prayer-cosmic">
-            <button id="collective-cosmic-btn" class="collective-btn-cosmic">
-                <i class="fas fa-star"></i> جامع الدعاء
-            </button>
-        </div>
-    </header>
-
-    <!-- المحتوى الرئيسي -->
-    <main class="cosmic-container">
-        <div class="cosmic-grid" id="cosmic-duas-container">
+        <div id="collective-cosmic-content">
             <!-- سيتم ملؤه بالأدعية -->
         </div>
-    </main>
-
-    <!-- نافذة جامع الدعاء الكونية -->
-    <div class="cosmic-modal" id="collective-cosmic-modal">
-        <div class="cosmic-modal-content">
-            <button class="cosmic-close-btn" id="collective-close-cosmic">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="cosmic-modal-header">
-                <h2 class="cosmic-modal-title">جامع الدعاء </h2>
-            </div>
-            <div id="collective-cosmic-content">
-                <!-- سيتم ملؤه بالأدعية -->
-            </div>
-        </div>
     </div>
+</div>
 
-    <!-- التذييل الكوني -->
-    <footer class="cosmic-footer">
-        <p class="cosmic-footer-text">
-            ✨ وقف لله تعالى - رحلة روحانية عبر الكون ✨
-        </p>
-    </footer>
+<!-- التذييل الكوني -->
+<footer class="cosmic-footer">
+    <p class="cosmic-footer-text">
+       وقف لله تعالى
+    </p>
+</footer>
 
-    <!-- مكتبة html2canvas -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<!-- مكتبة html2canvas -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-    <script>
-        // ================== بيانات الأدعية ==================
-        const cosmicDuas = [
-            {
-                text: "﴿ ربنا تقبل منا إنك أنت السميع العليم ﴾",
-            },
-            {
-                text: "﴿ ربنا واجعلنا مسلمين لك و من ذريتنا أمه مسلمة لك و أرنا مناسكنا و تب علينا إنك أنت التواب الرحيم ﴾",
-            },
-            {
-                text: "﴿ ربنا اتنا في الدنيا حسنة و في  الاخرة حسنة و قنا عذاب النار ﴾",
-            },
-            {
-                text: "﴿ ربنا أفرغ علينا صبرا وثبت أقدامنا وانصرنا على القوم الكافرين ﴾",
-            },
-            {
-                text: "﴿ ربنا لا تؤاخذنا إن نسينا أو أخطأنا ربنا ولا تحمل علينا إصرا كما حملته على الذين من قبلنا ربنا ولا تحملنا ما لا طاقة لنا به واعف عنا واغفر لنا وارحمنا أنت مولانا فانصرنا على القوم الكافرين ﴾",
-            },
-            {
-                text: "﴿ ربنا لا تزغ قلوبنا بعد إذ هديتنا وهب لنا من لدنك رحمة إنك أنت الوهاب ﴾",
-            },
-            {
-                text: "﴿ ربنا إنك جامع الناس ليوم لا ريب فيه إن الله لا يخلف الميعاد ﴾",
-            },
-            {
-                text: "﴿ ربنا إننا آمنا فاغفر لنا ذنوبنا وقنا عذاب النار﴾",
-            },
-            {
-                text: "﴿ اللهم مالك الملك تؤتي الملك من تشاء وتنزع الملك ممن تشاء وتعز من تشاء وتذل من تشاء بيدك الخير إنك على كل شيء قدير تولج الليل في النهار وتولج النهار في الليل وتخرج الحي من الميت وتخرج الميت من الحي وترزق من تشاء بغير حساب ﴾",
-            },
-            {
-                text: "﴿ رب هب لي من لدنك ذرية طيبة إنك سميع الدعاء ﴾",
-            },
-            {
-                text: "﴿ ربنا آمنا بما أنزلت واتبعنا الرسول فاكتبنا مع الشاهدين ﴾",
-            },
-            {
-                text: "﴿ آمنا بالله وما أنزل علينا وما أنزل على إبراهيم وإسماعيل وإسحاق ويعقوب والأسباط وما أوتي موسى وعيسى والنبيون من ربهم لا نفرق بين أحد منهم ونحن له مسلمون ﴾",
-            },
-            {
-                text: "﴿ ربنا اغفر لنا ذنوبنا وإسرافنا في أمرنا وثبت أقدامنا وانصرنا على القوم الكافرين ﴾",
-            },
-            {
-                text: "﴿ حسبنا الله ونعم الوكيل ﴾",
-            },
-            {
-                text: "﴿ ربنا ما خلقت هذا باطلا سبحانك فقنا عذاب النار﴾",
-            },
-            {
-                text: "﴿ ربنا إنك من تدخل النار فقد أخزيته وما للظالمين من أنصار﴾",
-            },
-            {
-                text: "﴿ ربنا إننا سمعنا مناديا ينادي للإيمان أن آمنوا بربكم فآمنا ﴾",
-            },
-            {
-                text: "﴿ ربنا فاغفر لنا ذنوبنا وكفر عنا سيئاتنا وتوفنا مع الأبرار ﴾",
-            },
-            {
-                text: "﴿ ربنا وآتنا ما وعدتنا على رسلك ولا تخزنا يوم القيامة إنك لا تخلف الميعاد ﴾",
-            },
-            {
-                text: "﴿ ربنا أخرجنا من هذه القرية الظالم أهلها واجعل لنا من لدنك وليا واجعل لنا من لدنك نصيرا ﴾",
-            },
-            {
-                text: "﴿ ربنا آمنا فاكتبنا مع الشاهدين ﴾",
-            },
-            {
-                text: "﴿ وما لنا لا نؤمن بالله وما جاءنا من الحق ونطمع أن يدخلنا ربنا مع القوم الصالحين ﴾",
-            },
-            {
-                text: "﴿ إن صلاتي ونسكي ومحياي ومماتي لله رب العالمين لا شريك له وبذلك أمرت وأنا أول المسلمين ﴾",
-            },
-            {
-                text: "﴿ ربنا لا تجعلنا مع القوم الظالمين ﴾",
-            },
-            {
-                text: "﴿ ربنا أفرغ علينا صبرا وتوفنا مسلمين ﴾",
-            },
-            {
-                text: "﴿ واكتب لنا في هذه الدنيا حسنة وفي الآخرة إنا هدنا إليك ﴾",
-            },
-            {
-                text: "﴿ حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم ﴾",
-            },
-            {
-                text: "﴿ على الله توكلنا ربنا لا تجعلنا فتنة للقوم الظالمين ﴾",
-            },
-            {
-                text: "﴿ ونجنا برحمتك من القوم الكافرين ﴾",
-            },
-            {
-                text: "﴿ ربنا إنك آتيت فرعون وملأه زينة وأموالا في الحياة الدنيا ربنا ليضلوا عن سبيلك ربنا اطمس على أموالهم واشدد على قلوبهم فلا يؤمنوا حتى يروا العذاب الأليم ﴾",
-            },
-            {
-                text: "﴿ رب إني أعوذ بك أن أسألك ما ليس لي به علم وإلا تغفر لي وترحمني أكن من الخاسرين ﴾",
-            },
-            {
-                text: "﴿ رب قد آتيتني من الملك وعلمتني من تأويل الأحاديث فاطر السماوات والأرض أنت وليي في الدنيا والآخرة توفني مسلما وألحقني بالصالحين ﴾",
-            },
-            {
-                text: "﴿ رب اجعل هذا البلد آمنا واجنبني وبني أن نعبد الأصنام ﴾",
-            },
-            {
-                text: "﴿ رب إنهن أضللن كثيرا من الناس فمن تبعني فإنه مني ومن عصاني فإنك غفور رحيم ﴾",
-            },
-            {
-                text: "﴿ ربنا إنك تعلم ما نخفي وما نعلن وما يخفى على الله من شيء في الأرض ولا في السماء ﴾",
-            },
-            {
-                text: "﴿ إن ربي لسميع الدعاء ﴾",
-            },
-            {
-                text: "﴿ رب اجعلني مقيم الصلاة ومن ذريتي ربنا وتقبل دعاء ﴾",
-            },
-            {
-                text: "﴿ ربنا اغفر لي ولوالدي وللمؤمنين يوم يقوم الحساب ﴾",
-            },
-            {
-                text: "﴿ رب أرحمهما كما ربياني صغيراً ﴾",
-            },
-            {
-                text: "﴿ رب زدني علما ﴾",
-            },
-            {
-                text: "﴿ أني مسنى الضر و أنت أرحم الرحمين ﴾",
-            },
-            {
-                text: "﴿ أن لا إله  إلا انت سبحانك إني كنت من الظالمين ﴾",
-            },
-            {
-                text: "﴿ رب لا تذرني فردا و أنت خير الوارثين ﴾",
-            },
-            {
-                text: "﴿ رب فلا تجعلني في القوم الظالمين  ﴾",
-            },
-            {
-                text: "﴿  رب أعوذ بك من همزات الشياطين وأعوذ بك رب أن يحضرون ﴾",
-            },
-            {
-                text: "﴿ ربناء امنا فاغفر لنا و ارحمنا وأنت خير الراحمين ﴾",
-            },
-            {
-                text: "﴿ رب أغفر و أرحم و أنت  خير  الراحمين ﴾",
-            },
-            {
-                text: "﴿ ربنا أصرف عنا عذاب جهنم إن عذابها كان غراما إنها ساءت مستقرا و مقاما﴾",
-            },
-            {
-                text: "﴿ ربنا هب لنا من أزواجنا وذرياتنا قرة أعين و اجعلنا للمتقين إماما ﴾",
-            },
-            {
-                text: "﴿ رب هب لي حكما وألحقني بالصالحين واجعل لي لسان صدق في الآخرين واجعلني من ورثة جنة النعيم ولا تخزني يوم يبعثون يوم لا ينفع مال ولا بنون  إلا من أتى الله بقلب سليم ﴾",
-            },
-            {
-                text: "﴿ فافتح بيني وبينهم فتحا ونجني ومن معي من المؤمنين ﴾",
-            },
-            {
-                text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت على و على ولدي و أن اعمل صالحا ترضاه و أدخلني برحمتك في عبادك الصالحين ﴾",
-            },
-            {
-                text: "﴿ رب إني ظلمت نفسي فاغفر لي ﴾",
-            },
-            {
-                text: "﴿ رب نجني من القوم الظالمين ﴾",
-            },
-            {
-                text: "﴿ رب إني لما أنزلت إلي من خير فقير ﴾",
-            },
-            {
-                text: "﴿ رب انصرني على القوم المفسدين ﴾",
-            },
-            {
-                text: "﴿ الحمد لله الذي أذهب عنا الحزن إن ربنا لغفور شكور ﴾",
-            },
-            {
-                text: "﴿ رب هب لي من الصالحين ﴾",
-            },
-            {
-                text: "﴿ رب أغفر لي و هب لي  ملكاً لا ينبغي لأحد من بعدى أنك أنت الوهاب ﴾",
-            },
-            {
-                text: "﴿ أني مسني الشيطان بنصب وعذاب ﴾",
-            },
-            {
-                text: "﴿ اللهم فاطر السماوات والأرض عالم الغيب والشهادة أنت تحكم بين عبادك في ما كانوا فيه يختلفون ﴾",
-            },
-            {
-                text: "﴿ ربنا وسعت كل شيء رحمة وعلما فاغفر للذين تابوا واتبعوا سبيلك وقهم عذاب الجحيم ﴾",
-            },
-            {
-                text: "﴿ ربنا وأدخلهم جنات عدن التي وعدتهم ومن صلح من آبائهم وأزواجهم وذرياتهم إنك أنت العزيز الحكيم ﴾",
-            },
-            {
-                text: "﴿ وقهم السيئات ومن تق السيئات يومئذ فقد رحمته وذلك هو الفوز العظيم ﴾",
-            },
-            {
-                text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت علي وعلى والدي وأن أعمل صالحا ترضاه وأصلح لي في ذريتي إني تبت إليك وإني من المسلمين ﴾",
-            },
-            {
-                text: "﴿ أني مغلوب فانتصر ﴾",
-            },
-            {
-                text: "﴿ ربنا اغفر لنا ولإخواننا الذين سبقونا بالإيمان ولا تجعل في قلوبنا غلا للذين آمنوا ربنا إنك رءوف رحيم ﴾",
-            },
-            {
-                text: "﴿ ربنا عليك توكلنا وإليك أنبنا وإليك المصير﴾",
-            },
-            {
-                text: "﴿ ربنا لا تجعلنا فتنة للذين كفروا واغفر لنا ربنا إنك أنت العزيز الحكيم ﴾",
-            },
-            {
-                text: "﴿ ربنا أتمم لنا نورنا و اغفر لنا إنك على كل شى قدير ﴾",
-            },
-            {
-                text: "﴿ رب اغفر لي ولوالدي ولمن دخل بيتي مؤمنا وللمؤمنين والمؤمنات ولا تزد الظالمين إلا تبارا ﴾",
-            }
-        ];
-        // ================== إنشاء النجوم مع تحسينات الأداء ==================
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const isMobile = window.innerWidth <= 768;
-            const isSmallMobile = window.innerWidth <= 500;
-
-            // تقليل جذري لعدد النجوم على الموبايل
-            let starCount;
-            if (isSmallMobile) {
-                starCount = 50; // أقل للموبايل الصغير
-            } else if (isMobile) {
-                starCount = 80; // تقليل إضافي للموبايل
-            } else {
-                starCount = 200; // العدد الكامل للكمبيوتر
-            }
-
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-
-                // أنواع مختلفة من النجوم - تقليل الأنواع المعقدة على الموبايل
-                const types = isMobile ?
-                    ['small', 'medium'] : // أنواع مبسطة للموبايل
-                    ['small', 'medium', 'large', 'constellation'];
-                const randomType = types[Math.floor(Math.random() * types.length)];
-                star.classList.add(randomType);
-
-                // موضع عشوائي
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-
-                // تأخير عشوائي للرسوم المتحركة
-                star.style.animationDelay = Math.random() * (isMobile ? 8 : 5) + 's';
-
-                // تحسين الأداء على الموبايل
-                if (isMobile) {
-                    star.style.willChange = 'auto';
-                }
-
-                starsContainer.appendChild(star);
-            }
+<script>
+    // ================== بيانات الأدعية ==================
+    const cosmicDuas = [
+        {
+            text: "﴿ ربنا تقبل منا إنك أنت السميع العليم ﴾",
+        },
+        {
+            text: "﴿ ربنا واجعلنا مسلمين لك و من ذريتنا أمه مسلمة لك و أرنا مناسكنا و تب علينا إنك أنت التواب الرحيم ﴾",
+        },
+        {
+            text: "﴿ ربنا اتنا في الدنيا حسنة و في  الاخرة حسنة و قنا عذاب النار ﴾",
+        },
+        {
+            text: "﴿ ربنا أفرغ علينا صبرا وثبت أقدامنا وانصرنا على القوم الكافرين ﴾",
+        },
+        {
+            text: "﴿ ربنا لا تؤاخذنا إن نسينا أو أخطأنا ربنا ولا تحمل علينا إصرا كما حملته على الذين من قبلنا ربنا ولا تحملنا ما لا طاقة لنا به واعف عنا واغفر لنا وارحمنا أنت مولانا فانصرنا على القوم الكافرين ﴾",
+        },
+        {
+            text: "﴿ ربنا لا تزغ قلوبنا بعد إذ هديتنا وهب لنا من لدنك رحمة إنك أنت الوهاب ﴾",
+        },
+        {
+            text: "﴿ ربنا إنك جامع الناس ليوم لا ريب فيه إن الله لا يخلف الميعاد ﴾",
+        },
+        {
+            text: "﴿ ربنا إننا آمنا فاغفر لنا ذنوبنا وقنا عذاب النار﴾",
+        },
+        {
+            text: "﴿ اللهم مالك الملك تؤتي الملك من تشاء وتنزع الملك ممن تشاء وتعز من تشاء وتذل من تشاء بيدك الخير إنك على كل شيء قدير تولج الليل في النهار وتولج النهار في الليل وتخرج الحي من الميت وتخرج الميت من الحي وترزق من تشاء بغير حساب ﴾",
+        },
+        {
+            text: "﴿ رب هب لي من لدنك ذرية طيبة إنك سميع الدعاء ﴾",
+        },
+        {
+            text: "﴿ ربنا آمنا بما أنزلت واتبعنا الرسول فاكتبنا مع الشاهدين ﴾",
+        },
+        {
+            text: "﴿ آمنا بالله وما أنزل علينا وما أنزل على إبراهيم وإسماعيل وإسحاق ويعقوب والأسباط وما أوتي موسى وعيسى والنبيون من ربهم لا نفرق بين أحد منهم ونحن له مسلمون ﴾",
+        },
+        {
+            text: "﴿ ربنا اغفر لنا ذنوبنا وإسرافنا في أمرنا وثبت أقدامنا وانصرنا على القوم الكافرين ﴾",
+        },
+        {
+            text: "﴿ حسبنا الله ونعم الوكيل ﴾",
+        },
+        {
+            text: "﴿ ربنا ما خلقت هذا باطلا سبحانك فقنا عذاب النار﴾",
+        },
+        {
+            text: "﴿ ربنا إنك من تدخل النار فقد أخزيته وما للظالمين من أنصار﴾",
+        },
+        {
+            text: "﴿ ربنا إننا سمعنا مناديا ينادي للإيمان أن آمنوا بربكم فآمنا ﴾",
+        },
+        {
+            text: "﴿ ربنا فاغفر لنا ذنوبنا وكفر عنا سيئاتنا وتوفنا مع الأبرار ﴾",
+        },
+        {
+            text: "﴿ ربنا وآتنا ما وعدتنا على رسلك ولا تخزنا يوم القيامة إنك لا تخلف الميعاد ﴾",
+        },
+        {
+            text: "﴿ ربنا أخرجنا من هذه القرية الظالم أهلها واجعل لنا من لدنك وليا واجعل لنا من لدنك نصيرا ﴾",
+        },
+        {
+            text: "﴿ ربنا آمنا فاكتبنا مع الشاهدين ﴾",
+        },
+        {
+            text: "﴿ وما لنا لا نؤمن بالله وما جاءنا من الحق ونطمع أن يدخلنا ربنا مع القوم الصالحين ﴾",
+        },
+        {
+            text: "﴿ إن صلاتي ونسكي ومحياي ومماتي لله رب العالمين لا شريك له وبذلك أمرت وأنا أول المسلمين ﴾",
+        },
+        {
+            text: "﴿ ربنا لا تجعلنا مع القوم الظالمين ﴾",
+        },
+        {
+            text: "﴿ ربنا أفرغ علينا صبرا وتوفنا مسلمين ﴾",
+        },
+        {
+            text: "﴿ واكتب لنا في هذه الدنيا حسنة وفي الآخرة إنا هدنا إليك ﴾",
+        },
+        {
+            text: "﴿ حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم ﴾",
+        },
+        {
+            text: "﴿ على الله توكلنا ربنا لا تجعلنا فتنة للقوم الظالمين ﴾",
+        },
+        {
+            text: "﴿ ونجنا برحمتك من القوم الكافرين ﴾",
+        },
+        {
+            text: "﴿ ربنا إنك آتيت فرعون وملأه زينة وأموالا في الحياة الدنيا ربنا ليضلوا عن سبيلك ربنا اطمس على أموالهم واشدد على قلوبهم فلا يؤمنوا حتى يروا العذاب الأليم ﴾",
+        },
+        {
+            text: "﴿ رب إني أعوذ بك أن أسألك ما ليس لي به علم وإلا تغفر لي وترحمني أكن من الخاسرين ﴾",
+        },
+        {
+            text: "﴿ رب قد آتيتني من الملك وعلمتني من تأويل الأحاديث فاطر السماوات والأرض أنت وليي في الدنيا والآخرة توفني مسلما وألحقني بالصالحين ﴾",
+        },
+        {
+            text: "﴿ رب اجعل هذا البلد آمنا واجنبني وبني أن نعبد الأصنام ﴾",
+        },
+        {
+            text: "﴿ رب إنهن أضللن كثيرا من الناس فمن تبعني فإنه مني ومن عصاني فإنك غفور رحيم ﴾",
+        },
+        {
+            text: "﴿ ربنا إنك تعلم ما نخفي وما نعلن وما يخفى على الله من شيء في الأرض ولا في السماء ﴾",
+        },
+        {
+            text: "﴿ إن ربي لسميع الدعاء ﴾",
+        },
+        {
+            text: "﴿ رب اجعلني مقيم الصلاة ومن ذريتي ربنا وتقبل دعاء ﴾",
+        },
+        {
+            text: "﴿ ربنا اغفر لي ولوالدي وللمؤمنين يوم يقوم الحساب ﴾",
+        },
+        {
+            text: "﴿ رب أرحمهما كما ربياني صغيراً ﴾",
+        },
+        {
+            text: "﴿ رب زدني علما ﴾",
+        },
+        {
+            text: "﴿ أني مسنى الضر و أنت أرحم الرحمين ﴾",
+        },
+        {
+            text: "﴿ أن لا إله  إلا انت سبحانك إني كنت من الظالمين ﴾",
+        },
+        {
+            text: "﴿ رب لا تذرني فردا و أنت خير الوارثين ﴾",
+        },
+        {
+            text: "﴿ رب فلا تجعلني في القوم الظالمين  ﴾",
+        },
+        {
+            text: "﴿  رب أعوذ بك من همزات الشياطين وأعوذ بك رب أن يحضرون ﴾",
+        },
+        {
+            text: "﴿ ربناء امنا فاغفر لنا و ارحمنا وأنت خير الراحمين ﴾",
+        },
+        {
+            text: "﴿ رب أغفر و أرحم و أنت  خير  الراحمين ﴾",
+        },
+        {
+            text: "﴿ ربنا أصرف عنا عذاب جهنم إن عذابها كان غراما إنها ساءت مستقرا و مقاما﴾",
+        },
+        {
+            text: "﴿ ربنا هب لنا من أزواجنا وذرياتنا قرة أعين و اجعلنا للمتقين إماما ﴾",
+        },
+        {
+            text: "﴿ رب هب لي حكما وألحقني بالصالحين واجعل لي لسان صدق في الآخرين واجعلني من ورثة جنة النعيم ولا تخزني يوم يبعثون يوم لا ينفع مال ولا بنون  إلا من أتى الله بقلب سليم ﴾",
+        },
+        {
+            text: "﴿ فافتح بيني وبينهم فتحا ونجني ومن معي من المؤمنين ﴾",
+        },
+        {
+            text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت على و على ولدي و أن اعمل صالحا ترضاه و أدخلني برحمتك في عبادك الصالحين ﴾",
+        },
+        {
+            text: "﴿ رب إني ظلمت نفسي فاغفر لي ﴾",
+        },
+        {
+            text: "﴿ رب نجني من القوم الظالمين ﴾",
+        },
+        {
+            text: "﴿ رب إني لما أنزلت إلي من خير فقير ﴾",
+        },
+        {
+            text: "﴿ رب انصرني على القوم المفسدين ﴾",
+        },
+        {
+            text: "﴿ الحمد لله الذي أذهب عنا الحزن إن ربنا لغفور شكور ﴾",
+        },
+        {
+            text: "﴿ رب هب لي من الصالحين ﴾",
+        },
+        {
+            text: "﴿ رب أغفر لي و هب لي  ملكاً لا ينبغي لأحد من بعدى أنك أنت الوهاب ﴾",
+        },
+        {
+            text: "﴿ أني مسني الشيطان بنصب وعذاب ﴾",
+        },
+        {
+            text: "﴿ اللهم فاطر السماوات والأرض عالم الغيب والشهادة أنت تحكم بين عبادك في ما كانوا فيه يختلفون ﴾",
+        },
+        {
+            text: "﴿ ربنا وسعت كل شيء رحمة وعلما فاغفر للذين تابوا واتبعوا سبيلك وقهم عذاب الجحيم ﴾",
+        },
+        {
+            text: "﴿ ربنا وأدخلهم جنات عدن التي وعدتهم ومن صلح من آبائهم وأزواجهم وذرياتهم إنك أنت العزيز الحكيم ﴾",
+        },
+        {
+            text: "﴿ وقهم السيئات ومن تق السيئات يومئذ فقد رحمته وذلك هو الفوز العظيم ﴾",
+        },
+        {
+            text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت علي وعلى والدي وأن أعمل صالحا ترضاه وأصلح لي في ذريتي إني تبت إليك وإني من المسلمين ﴾",
+        },
+        {
+            text: "﴿ أني مغلوب فانتصر ﴾",
+        },
+        {
+            text: "﴿ ربنا اغفر لنا ولإخواننا الذين سبقونا بالإيمان ولا تجعل في قلوبنا غلا للذين آمنوا ربنا إنك رءوف رحيم ﴾",
+        },
+        {
+            text: "﴿ ربنا عليك توكلنا وإليك أنبنا وإليك المصير﴾",
+        },
+        {
+            text: "﴿ ربنا لا تجعلنا فتنة للذين كفروا واغفر لنا ربنا إنك أنت العزيز الحكيم ﴾",
+        },
+        {
+            text: "﴿ ربنا أتمم لنا نورنا و اغفر لنا إنك على كل شى قدير ﴾",
+        },
+        {
+            text: "﴿ رب اغفر لي ولوالدي ولمن دخل بيتي مؤمنا وللمؤمنين والمؤمنات ولا تزد الظالمين إلا تبارا ﴾",
         }
+    ];
 
-        // ================== إنشاء نظام الجسيمات مع تحسينات الأداء ==================
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const isMobile = window.innerWidth <= 768;
-            const isSmallMobile = window.innerWidth <= 500;
 
-            // تقليل جذري لعدد الجسيمات على الموبايل
-            let particleCount;
-            if (isSmallMobile) {
-                particleCount = 10; // أقل للموبايل الصغير
-            } else if (isMobile) {
-                particleCount = 15; // تقليل إضافي للموبايل
-            } else {
-                particleCount = 50; // العدد الكامل للكمبيوتر
-            }
+    // ================== عرض الأدعية ==================
+    function displayCosmicDuas(duasToShow = cosmicDuas) {
+        const container = document.getElementById('cosmic-duas-container');
+        container.innerHTML = '';
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
+        duasToShow.forEach((dua, index) => {
+            const duaCard = document.createElement('div');
+            duaCard.className = 'cosmic-dua-card';
+            duaCard.innerHTML = `
+                <div class="cosmic-dua-text">${dua.text}</div>
+                <div class="cosmic-actions">
+                    <button class="cosmic-btn copy" onclick="copyCosmicDua(this)">
+                        <span class="btn-text">
+                            <i class="fas fa-copy"></i> نسخ
+                        </span>
+                    </button>
 
-                // أنواع مختلفة من الجسيمات - تبسيط على الموبايل
-                const types = isMobile ?
-                    ['', 'energy'] : // أنواع مبسطة للموبايل
-                    ['', 'energy', 'magic', 'cosmic'];
-                const randomType = types[Math.floor(Math.random() * types.length)];
-                if (randomType) particle.classList.add(randomType);
-
-                // موضع عشوائي
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = '100%';
-
-                // تأخير عشوائي - أبطأ على الموبايل
-                particle.style.animationDelay = Math.random() * (isMobile ? 30 : 20) + 's';
-
-                // مدة عشوائية - أبطأ على الموبايل
-                const baseDuration = isMobile ? 20 : 10;
-                const duration = (Math.random() * 10 + baseDuration) + 's';
-                particle.style.animationDuration = duration;
-
-                // تحسين الأداء على الموبايل
-                if (isMobile) {
-                    particle.style.willChange = 'auto';
-                    particle.style.opacity = '0.7';
-                }
-
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // ================== عرض الأدعية ==================
-        function displayCosmicDuas(duasToShow = cosmicDuas) {
-            const container = document.getElementById('cosmic-duas-container');
-            container.innerHTML = '';
-
-            duasToShow.forEach((dua, index) => {
-                const duaCard = document.createElement('div');
-                duaCard.className = 'cosmic-dua-card';
-                duaCard.innerHTML = `
-                    <div class="cosmic-dua-text">${dua.text}</div>
-                    <div class="cosmic-actions">
-                        <button class="cosmic-btn copy" onclick="copyCosmicDua(this)">
-                            <span class="btn-text">
-                                <i class="fas fa-copy"></i> نسخ
-                            </span>
-                        </button>
-                        <button class="cosmic-btn save" onclick="saveCosmicDua(this)">
-                            <span class="btn-text">
-                                <i class="fas fa-save"></i> حفظ
-                            </span>
-                        </button>
-                    </div>
-                `;
-                container.appendChild(duaCard);
-            });
-        }
-
-        // ================== البحث في الأدعية ==================
-        function searchCosmicDuas() {
-            const searchInput = document.getElementById('cosmic-search-input');
-            const searchTerm = searchInput.value.trim();
-
-            if (searchTerm === '') {
-                displayCosmicDuas();
-                return;
-            }
-
-            const filteredDuas = cosmicDuas.filter(dua =>
-                dua.text.includes(searchTerm)
-            );
-
-            displayCosmicDuas(filteredDuas);
-        }
-
-        // ================== نسخ الدعاء ==================
-        async function copyCosmicDua(button) {
-            const duaCard = button.closest('.cosmic-dua-card');
-            const duaText = duaCard.querySelector('.cosmic-dua-text').innerText;
-            const btnText = button.querySelector('.btn-text');
-            const originalHtml = btnText.innerHTML;
-
-            button.classList.add('loading');
-
-            try {
-                await navigator.clipboard.writeText(duaText);
-
-                button.classList.remove('loading');
-                btnText.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
-
-                setTimeout(() => {
-                    btnText.innerHTML = originalHtml;
-                }, 2000);
-            } catch (err) {
-                button.classList.remove('loading');
-                btnText.innerHTML = '<i class="fas fa-times"></i> فشل النسخ';
-
-                setTimeout(() => {
-                    btnText.innerHTML = originalHtml;
-                }, 2000);
-            }
-        }
-
-        // ================== حفظ الدعاء ==================
-        async function saveCosmicDua(button) {
-            const duaCard = button.closest('.cosmic-dua-card');
-            const btnText = button.querySelector('.btn-text');
-            const originalHtml = btnText.innerHTML;
-
-            button.classList.add('loading');
-
-            try {
-                // إنشاء نسخة للحفظ
-                const tempCard = duaCard.cloneNode(true);
-                tempCard.style.cssText = `
-                    position: absolute;
-                    left: -9999px;
-                    top: -9999px;
-                    width: 500px;
-                    background: linear-gradient(135deg, #0a0a23 0%, #2d1b69 100%);
-                    border: 3px solid #ffd700;
-                    border-radius: 25px;
-                    padding: 40px;
-                `;
-
-                // إزالة الأزرار
-                const actions = tempCard.querySelector('.cosmic-actions');
-                actions.style.display = 'none';
-
-                document.body.appendChild(tempCard);
-
-                // التقاط الصورة
-                const canvas = await html2canvas(tempCard, {
-                    backgroundColor: null,
-                    scale: 2,
-                    useCORS: true
-                });
-
-                // تحميل الصورة
-                const link = document.createElement('a');
-                link.download = 'دعاء-كوني.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-
-                // تنظيف
-                document.body.removeChild(tempCard);
-
-                button.classList.remove('loading');
-                btnText.innerHTML = '<i class="fas fa-check"></i> تم الحفظ';
-
-                setTimeout(() => {
-                    btnText.innerHTML = originalHtml;
-                }, 2000);
-
-            } catch (err) {
-                button.classList.remove('loading');
-                btnText.innerHTML = '<i class="fas fa-times"></i> فشل الحفظ';
-
-                setTimeout(() => {
-                    btnText.innerHTML = originalHtml;
-                }, 2000);
-            }
-        }
-
-        // ================== فتح نافذة جامع الدعاء ==================
-        function openCollectiveCosmicModal() {
-            const modal = document.getElementById('collective-cosmic-modal');
-            const content = document.getElementById('collective-cosmic-content');
-
-            content.innerHTML = '';
-
-            cosmicDuas.forEach((dua, index) => {
-                const duaDiv = document.createElement('div');
-                duaDiv.style.cssText = `
-                    margin: 25px 0;
-                    padding: 25px;
-                    background: rgba(255, 255, 255, 0.1);
-                    border: 1px solid rgba(255, 215, 0, 0.3);
-                    border-radius: 15px;
-                    font-size: 1.4rem;
-                    line-height: 2;
-                    text-align: center;
-                    backdrop-filter: blur(10px);
-                `;
-                duaDiv.textContent = dua.text;
-                content.appendChild(duaDiv);
-            });
-
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        // ================== إغلاق النوافذ المنبثقة ==================
-        function closeCosmicModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // ================== تأثيرات التفاعل مع الماوس ==================
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-
-            // تحريك النجوم
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((star, index) => {
-                const speed = (index % 3 + 1) * 0.5;
-                const x = (mouseX - 0.5) * speed;
-                const y = (mouseY - 0.5) * speed;
-                star.style.transform = `translate(${x}px, ${y}px)`;
-            });
-
-            // تحريك القمر
-            const moon = document.querySelector('.moon');
-            if (moon) {
-                const x = (mouseX - 0.5) * 10;
-                const y = (mouseY - 0.5) * 10;
-                moon.style.transform = `translate(${x}px, ${y}px)`;
-            }
+                </div>
+            `;
+            container.appendChild(duaCard);
         });
+    }
 
-        // ================== التهيئة ==================
-        document.addEventListener('DOMContentLoaded', () => {
-            // إنشاء العناصر المتحركة
-            createStars();
-            createParticles();
+    // ================== البحث في الأدعية ==================
+    function searchCosmicDuas() {
+        const searchInput = document.getElementById('cosmic-search-input');
+        const searchTerm = searchInput.value.trim();
 
-            // عرض الأدعية
+        if (searchTerm === '') {
             displayCosmicDuas();
+            return;
+        }
 
-            // معالجات الأحداث
-            document.getElementById('cosmic-search-btn').addEventListener('click', searchCosmicDuas);
-            document.getElementById('cosmic-search-input').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') searchCosmicDuas();
-            });
-            document.getElementById('cosmic-search-input').addEventListener('input', searchCosmicDuas);
+        const filteredDuas = cosmicDuas.filter(dua =>
+            dua.text.includes(searchTerm)
+        );
 
-            document.getElementById('collective-cosmic-btn').addEventListener('click', openCollectiveCosmicModal);
-            document.getElementById('collective-close-cosmic').addEventListener('click', () => {
-                closeCosmicModal('collective-cosmic-modal');
+        displayCosmicDuas(filteredDuas);
+    }
+
+    // ================== نسخ الدعاء ==================
+    async function copyCosmicDua(button) {
+        const duaCard = button.closest('.cosmic-dua-card');
+        const duaText = duaCard.querySelector('.cosmic-dua-text').innerText;
+        const btnText = button.querySelector('.btn-text');
+        const originalHtml = btnText.innerHTML;
+
+        button.classList.add('loading');
+
+        try {
+            await navigator.clipboard.writeText(duaText);
+
+            button.classList.remove('loading');
+            btnText.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+
+            setTimeout(() => {
+                btnText.innerHTML = originalHtml;
+            }, 2000);
+        } catch (err) {
+            button.classList.remove('loading');
+            btnText.innerHTML = '<i class="fas fa-times"></i> فشل النسخ';
+
+            setTimeout(() => {
+                btnText.innerHTML = originalHtml;
+            }, 2000);
+        }
+    }
+
+    // ================== حفظ الدعاء ==================
+    async function saveCosmicDua(button) {
+        const duaCard = button.closest('.cosmic-dua-card');
+        const btnText = button.querySelector('.btn-text');
+        const originalHtml = btnText.innerHTML;
+
+        button.classList.add('loading');
+
+        try {
+            // إنشاء نسخة للحفظ
+            const tempCard = duaCard.cloneNode(true);
+            tempCard.style.cssText = `
+                position: absolute;
+                left: -9999px;
+                top: -9999px;
+                width: 500px;
+                background: linear-gradient(135deg, #0a0a23 0%, #2d1b69 100%);
+                border: 3px solid #ffd700;
+                border-radius: 25px;
+                padding: 40px;
+            `;
+
+            // إزالة الأزرار
+            const actions = tempCard.querySelector('.cosmic-actions');
+            actions.style.display = 'none';
+
+            document.body.appendChild(tempCard);
+
+            // التقاط الصورة
+            const canvas = await html2canvas(tempCard, {
+                backgroundColor: null,
+                scale: 2,
+                useCORS: true
             });
 
-            // إغلاق النافذة عند الضغط خارجها
-            document.getElementById('collective-cosmic-modal').addEventListener('click', (e) => {
-                if (e.target.id === 'collective-cosmic-modal') {
-                    closeCosmicModal('collective-cosmic-modal');
-                }
-            });
+            // تحميل الصورة
+            const link = document.createElement('a');
+            link.download = 'دعاء-كوني.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            // تنظيف
+            document.body.removeChild(tempCard);
+
+            button.classList.remove('loading');
+            btnText.innerHTML = '<i class="fas fa-check"></i> تم الحفظ';
+
+            setTimeout(() => {
+                btnText.innerHTML = originalHtml;
+            }, 2000);
+
+        } catch (err) {
+            button.classList.remove('loading');
+            btnText.innerHTML = '<i class="fas fa-times"></i> فشل الحفظ';
+
+            setTimeout(() => {
+                btnText.innerHTML = originalHtml;
+            }, 2000);
+        }
+    }
+
+    // ================== فتح نافذة جامع الدعاء ==================
+    function openCollectiveCosmicModal() {
+        const modal = document.getElementById('collective-cosmic-modal');
+        const content = document.getElementById('collective-cosmic-content');
+
+        content.innerHTML = '';
+
+        cosmicDuas.forEach((dua, index) => {
+            const duaDiv = document.createElement('div');
+            duaDiv.style.cssText = `
+                margin: 25px 0;
+                padding: 25px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 215, 0, 0.3);
+                border-radius: 15px;
+                font-size: 1.4rem;
+                line-height: 2;
+                text-align: center;
+                backdrop-filter: blur(10px);
+            `;
+            duaDiv.textContent = dua.text;
+            content.appendChild(duaDiv);
         });
-    </script>
+
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    // ================== إغلاق النوافذ المنبثقة ==================
+    function closeCosmicModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+
+    // ================== التهيئة ==================
+    document.addEventListener('DOMContentLoaded', () => {
+        // عرض الأدعية مباشرة بدون التأثيرات البصرية
+
+        // عرض الأدعية
+        displayCosmicDuas();
+
+        // معالجات الأحداث
+        document.getElementById('cosmic-search-btn').addEventListener('click', searchCosmicDuas);
+        document.getElementById('cosmic-search-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchCosmicDuas();
+        });
+        document.getElementById('cosmic-search-input').addEventListener('input', searchCosmicDuas);
+
+        document.getElementById('collective-cosmic-btn').addEventListener('click', openCollectiveCosmicModal);
+        document.getElementById('collective-close-cosmic').addEventListener('click', () => {
+            closeCosmicModal('collective-cosmic-modal');
+        });
+
+        // إغلاق النافذة عند الضغط خارجها
+        document.getElementById('collective-cosmic-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'collective-cosmic-modal') {
+                closeCosmicModal('collective-cosmic-modal');
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
