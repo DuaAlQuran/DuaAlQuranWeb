@@ -1,0 +1,939 @@
+/* ================== المتغيرات والأساسيات ================== */
+:root {
+    --cosmic-deep: #0a0a23;
+    --cosmic-blue: #1a1a5a;
+    --cosmic-purple: #2d1b69;
+    --cosmic-pink: #ff6b9d;
+    --cosmic-gold: #ffd700;
+    --text-white: #ffffff;
+    --accent-blue: #00d4ff;
+    --accent-purple: #d400ff;
+    --accent-color: #ffd700;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --modal-bg: rgba(10, 10, 35, 0.95);
+    --font-family: 'Scheherazade New', serif;
+    --font-size: 20px;
+}
+
+[data-theme="light"] {
+    --cosmic-deep: #f6f8f8;
+    --cosmic-blue: #e8eef3;
+    --text-white: #333333;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --modal-bg: rgba(246, 248, 248, 0.98);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--cosmic-gold);
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, 
+        var(--cosmic-deep) 0%, 
+        var(--cosmic-blue) 50%, 
+        var(--cosmic-purple) 100%);
+    background-attachment: fixed;
+    color: var(--text-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+    animation: patternMove 30s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes patternMove {
+    0% { transform: translateX(0) translateY(0); }
+    100% { transform: translateX(60px) translateY(60px); }
+}
+
+.app-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* تقليل الحركة للمستخدمين الذين يفضلون ذلك */
+body.reduce-motion * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+}
+
+/* ================== الهيدر ================== */
+.cosmic-header {
+    background: linear-gradient(135deg,
+        rgba(10, 10, 35, 0.9) 0%,
+        rgba(45, 27, 105, 0.8) 50%,
+        rgba(26, 26, 90, 0.9) 100%);
+    backdrop-filter: blur(20px);
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+[data-theme="light"] .cosmic-header {
+    background: linear-gradient(135deg,
+        rgba(246, 248, 248, 0.95) 0%,
+        rgba(232, 238, 243, 0.95) 100%);
+    border-bottom: 2px solid rgba(76, 154, 147, 0.3);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+}
+
+.icon-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.cosmic-title {
+    font-family: 'Scheherazade New', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    background: linear-gradient(45deg,
+        var(--cosmic-gold) 0%,
+        var(--text-white) 25%,
+        var(--accent-blue) 50%,
+        var(--cosmic-pink) 75%,
+        var(--cosmic-gold) 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: cosmicTextShimmer 4s ease-in-out infinite;
+    margin: 0;
+}
+
+@keyframes cosmicTextShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.cosmic-subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--accent-blue);
+    margin-bottom: 30px;
+    animation: subtitleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes subtitleGlow {
+    0% { 
+        color: var(--accent-blue);
+        text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+    100% { 
+        color: var(--accent-color);
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+    }
+}
+
+/* ================== البحث ================== */
+.cosmic-search {
+    max-width: 600px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50px;
+    padding: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.cosmic-search::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 215, 0, 0.2) 50%,
+        transparent 100%);
+    animation: searchShimmer 3s ease-in-out infinite;
+}
+
+@keyframes searchShimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.cosmic-search input {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text-white);
+    font-size: 1.1rem;
+    font-family: 'Cairo', sans-serif;
+    outline: none;
+    position: relative;
+    z-index: 2;
+}
+
+.cosmic-search input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.cosmic-search button {
+    padding: 12px 25px;
+    background: linear-gradient(45deg, var(--cosmic-gold) 0%, var(--accent-blue) 100%);
+    border: none;
+    border-radius: 50px;
+    color: var(--text-white);
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.cosmic-search button:hover {
+    background: linear-gradient(45deg, var(--accent-blue) 0%, var(--cosmic-pink) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+}
+
+/* ================== زر جامع الدعاء ================== */
+.collective-prayer-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.collective-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg,
+        var(--cosmic-purple) 0%,
+        var(--accent-purple) 50%,
+        var(--cosmic-pink) 100%);
+    border: none;
+    border-radius: 30px;
+    color: var(--text-white);
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 30px rgba(212, 0, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.collective-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%);
+    transition: left 0.5s ease;
+}
+
+.collective-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 50px rgba(212, 0, 255, 0.6);
+}
+
+.collective-btn:hover::before {
+    left: 100%;
+}
+
+.saved-count {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* ================== الحاوية الرئيسية ================== */
+.cosmic-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* ================== شبكة البطاقات ================== */
+.cosmic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+    .cosmic-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* ================== بطاقة الدعاء ================== */
+.cosmic-dua-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.cosmic-dua-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg,
+        rgba(255, 215, 0, 0.1) 0%,
+        transparent 50%,
+        rgba(0, 212, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.cosmic-dua-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 50px var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.cosmic-dua-card:hover::before {
+    opacity: 1;
+}
+
+.cosmic-dua-card.saved {
+    border-color: var(--cosmic-pink);
+    box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
+}
+
+.dua-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.dua-category {
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.bookmark-icon {
+    color: var(--cosmic-pink);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.bookmark-icon:hover {
+    transform: scale(1.2);
+}
+
+.dua-text {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: 2;
+    color: var(--text-white);
+    text-align: center;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.dua-translation {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    margin-top: 15px;
+    font-style: italic;
+    display: none;
+}
+
+.dua-translation.show {
+    display: block;
+}
+
+.dua-reference {
+    font-size: 0.85rem;
+    color: var(--accent-blue);
+    text-align: center;
+    margin-top: 10px;
+    display: none;
+}
+
+.dua-reference.show {
+    display: block;
+}
+
+/* ================== المودال ================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: var(--modal-bg);
+    backdrop-filter: blur(30px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 30px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    padding: 25px 30px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+.modal-header h2 {
+    font-family: 'Scheherazade New', serif;
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-white);
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background: rgba(255, 0, 0, 0.5);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.dua-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dua-text-large {
+    font-family: var(--font-family);
+    font-size: calc(var(--font-size) + 8px);
+    line-height: 2.2;
+    color: var(--text-white);
+    text-align: center;
+    margin: 30px 0;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    border-right: 4px solid var(--accent-color);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.action-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.copy-btn {
+    background: linear-gradient(45deg, var(--cosmic-blue) 0%, var(--accent-blue) 100%);
+    color: var(--text-white);
+}
+
+.copy-btn:hover {
+    background: linear-gradient(45deg, var(--accent-blue) 0%, var(--cosmic-gold) 100%);
+    transform: translateY(-3px);
+}
+
+.save-btn {
+    background: linear-gradient(45deg, var(--cosmic-purple) 0%, var(--cosmic-pink) 100%);
+    color: var(--text-white);
+}
+
+.save-btn:hover {
+    background: linear-gradient(45deg, var(--cosmic-pink) 0%, var(--accent-purple) 100%);
+    transform: translateY(-3px);
+}
+
+.save-btn.saved {
+    background: linear-gradient(45deg, #4CAF50 0%, #8BC34A 100%);
+}
+
+.share-btn {
+    background: linear-gradient(45deg, var(--cosmic-gold) 0%, #FFA500 100%);
+    color: var(--text-white);
+}
+
+.share-btn:hover {
+    background: linear-gradient(45deg, #FFA500 0%, var(--cosmic-gold) 100%);
+    transform: translateY(-3px);
+}
+
+/* ================== مودال جامع الدعاء ================== */
+.collective-modal {
+    max-width: 800px;
+}
+
+.saved-duas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.saved-dua-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.saved-dua-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-color);
+    transform: translateX(-5px);
+}
+
+.saved-dua-content {
+    flex: 1;
+}
+
+.saved-dua-text {
+    font-family: var(--font-family);
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-white);
+    margin-bottom: 10px;
+}
+
+.saved-dua-category {
+    font-size: 0.9rem;
+    color: var(--accent-blue);
+}
+
+.saved-dua-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.small-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.small-btn:hover {
+    background: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+/* ================== مودال الإعدادات ================== */
+.settings-modal {
+    max-width: 600px;
+}
+
+.settings-group {
+    margin-bottom: 30px;
+}
+
+.settings-group h3 {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-group select {
+    width: 100%;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 15px;
+    color: var(--text-white);
+    font-size: 1rem;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    outline: none;
+}
+
+.settings-group select option {
+    background: var(--cosmic-deep);
+    color: var(--text-white);
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.slider-container input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    outline: none;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+.slider-container input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+.slider-container span {
+    min-width: 60px;
+    text-align: center;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.color-picker {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.color-option {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.color-option.active {
+    border-color: var(--text-white);
+    box-shadow: 0 0 20px currentColor;
+}
+
+.toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.toggle-label input[type="checkbox"] {
+    width: 50px;
+    height: 26px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.toggle-label input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    top: 3px;
+    right: 3px;
+    transition: transform 0.3s ease;
+}
+
+.toggle-label input[type="checkbox"]:checked {
+    background: var(--accent-color);
+}
+
+.toggle-label input[type="checkbox"]:checked::before {
+    transform: translateX(-24px);
+}
+
+.settings-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.reset-btn {
+    background: linear-gradient(45deg, #f44336 0%, #e91e63 100%);
+    color: white;
+}
+
+.reset-btn:hover {
+    background: linear-gradient(45deg, #e91e63 0%, #f44336 100%);
+    transform: translateY(-3px);
+}
+
+.export-btn {
+    background: linear-gradient(45deg, #4CAF50 0%, #8BC34A 100%);
+    color: white;
+}
+
+.export-btn:hover {
+    background: linear-gradient(45deg, #8BC34A 0%, #4CAF50 100%);
+    transform: translateY(-3px);
+}
+
+/* ================== الرسائل التوضيحية ================== */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, var(--cosmic-purple) 0%, var(--cosmic-pink) 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    animation: slideInRight 0.4s ease, slideOutRight 0.4s ease 2.6s forwards;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: bold;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    to {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+}
+
+/* ================== استجابة الشاشات الصغيرة ================== */
+@media (max-width: 768px) {
+    .cosmic-title {
+        font-size: 2rem;
+    }
+    
+    .cosmic-subtitle {
+        font-size: 1rem;
+    }
+    
+    .collective-btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+    }
+    
+    .modal-content {
+        margin: 20px;
+        max-height: 85vh;
+    }
+    
+    .dua-text-large {
+        font-size: calc(var(--font-size) + 4px);
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
