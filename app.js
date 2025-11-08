@@ -1,18 +1,19 @@
-let currentDua = null;
 let savedDuas = JSON.parse(localStorage.getItem('savedDuas')) || [];
 let settings = JSON.parse(localStorage.getItem('settings')) || {
     fontFamily: "'Scheherazade New', serif",
-    fontSize: 20,
-    accentColor: '#ffd700',
+    fontSize: 18,
     reduceMotion: false,
-    theme: 'dark'
+    theme: 'light'
 };
+
+let lastScrollY = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     loadSettings();
     renderDuas();
     updateSavedCount();
     initSearch();
+    initScrollBehavior();
 });
 
 function loadSettings() {
@@ -23,162 +24,72 @@ function loadSettings() {
     document.getElementById('fontSizeValue').textContent = settings.fontSize + 'px';
     document.getElementById('reduceMotion').checked = settings.reduceMotion;
     
-    if (settings.theme === 'light') {
-        document.body.setAttribute('data-theme', 'light');
-        document.getElementById('theme-icon').className = 'fas fa-sun';
+    if (settings.theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.getElementById('themeIcon').textContent = 'light_mode';
+    } else {
+        document.documentElement.classList.remove('dark');
+        document.getElementById('themeIcon').textContent = 'dark_mode';
     }
 }
 
 function applySettings() {
-    document.documentElement.style.setProperty('--font-family', settings.fontFamily);
-    document.documentElement.style.setProperty('--font-size', settings.fontSize + 'px');
-    document.documentElement.style.setProperty('--accent-color', settings.accentColor);
-    
     if (settings.reduceMotion) {
-        document.body.classList.add('reduce-motion');
+        document.body.style.transition = 'none';
     } else {
-        document.body.classList.remove('reduce-motion');
+        document.body.style.transition = '';
     }
 }
 
 function renderDuas(duasToRender = duasData) {
-    const grid = document.getElementById('duaGrid');
-    grid.innerHTML = '';
+    const container = document.getElementById('duasContainer');
+    container.innerHTML = '';
     
     duasToRender.forEach(dua => {
         const isSaved = savedDuas.some(saved => saved.id === dua.id);
-        const card = document.createElement('div');
-        card.className = `cosmic-dua-card ${isSaved ? 'saved' : ''}`;
-        card.onclick = () => openDuaModal(dua);
-        
-        card.innerHTML = `
-            <div class="dua-header">
-                <i class="${isSaved ? 'fas' : 'far'} fa-bookmark bookmark-icon" 
-                   onclick="event.stopPropagation(); quickToggleSave(${dua.id})"></i>
-            </div>
-            <div class="dua-text">${dua.text}</div>
-        `;
-        
-        grid.appendChild(card);
+        const duaElement = createDuaElement(dua, isSaved);
+        container.appendChild(duaElement);
     });
     
     if (duasToRender.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1/-1;">
-                <i class="fas fa-search"></i>
-                <p>لم يتم العثور على نتائج</p>
+        container.innerHTML = `
+            <div class="text-center py-20">
+                <span class="material-symbols-outlined text-6xl text-gray-400">search_off</span>
+                <p class="text-lg text-gray-500 mt-4">لم يتم العثور على نتائج</p>
             </div>
         `;
     }
 }
 
-function initSearch() {
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.trim();
-        if (query === '') {
-            renderDuas();
-        } else {
-            searchDuas();
-        }
-    });
+function createDuaElement(dua, isSaved) {
+    const div = document.createElement('div');
+    div.className = `flex cursor-pointer items-center gap-4 rounded-xl px-4 py-3 min-h-14 justify-between transition-all ${
+        isSaved 
+            ? 'bg-teal-highlight-light dark:bg-teal-highlight-dark' 
+            : 'bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10'
+    }`;
     
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            searchDuas();
-        }
-    });
+    div.innerHTML = `
+        <div class="flex flex-1 items-center gap-4">
+            <div class="flex size-10 shrink-0 items-center justify-center rounded-lg ${
+                isSaved 
+                    ? 'bg-primary/20 text-primary' 
+                    : 'bg-gray-200 dark:bg-white/10'
+            }">
+                <span class="material-symbols-outlined ${isSaved ? 'filled' : ''} text-2xl ${
+                    isSaved ? 'text-primary' : 'text-gray-500 dark:text-gray-400'
+                }">star</span>
+            </div>
+            <p class="flex-1 text-base font-normal leading-normal font-arabic" style="font-family: ${settings.fontFamily}; font-size: ${settings.fontSize}px; line-height: 1.8;">${dua.text}</p>
+        </div>
+    `;
+    
+    div.onclick = () => toggleDuaSave(dua.id);
+    
+    return div;
 }
 
-function searchDuas() {
-    const query = document.getElementById('searchInput').value.trim().toLowerCase();
-    
-    if (!query) {
-        renderDuas();
-        return;
-    }
-    
-    const filtered = duasData.filter(dua => 
-        dua.text.toLowerCase().includes(query)
-    );
-    
-    renderDuas(filtered);
-}
-
-function openDuaModal(dua) {
-    currentDua = dua;
-    const modal = document.getElementById('duaModal');
-    const isSaved = savedDuas.some(saved => saved.id === dua.id);
-    
-    document.getElementById('modalTitle').textContent = 'دعاء من القرآن الكريم';
-    document.getElementById('modalText').textContent = dua.text;
-    
-    const saveBtn = document.getElementById('saveBtn');
-    if (isSaved) {
-        saveBtn.classList.add('saved');
-        saveBtn.innerHTML = '<i class="fas fa-bookmark"></i><span>محفوظ</span>';
-    } else {
-        saveBtn.classList.remove('saved');
-        saveBtn.innerHTML = '<i class="far fa-bookmark"></i><span>حفظ</span>';
-    }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-    const modal = document.getElementById('duaModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-    currentDua = null;
-}
-
-function copyDua() {
-    if (!currentDua) return;
-    
-    const text = currentDua.text;
-    
-    navigator.clipboard.writeText(text).then(() => {
-        showToast('تم النسخ بنجاح ✓', 'success');
-    }).catch(() => {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        showToast('تم النسخ بنجاح ✓', 'success');
-    });
-}
-
-function toggleSave() {
-    if (!currentDua) return;
-    
-    const index = savedDuas.findIndex(dua => dua.id === currentDua.id);
-    const saveBtn = document.getElementById('saveBtn');
-    
-    if (index !== -1) {
-        savedDuas.splice(index, 1);
-        saveBtn.classList.remove('saved');
-        saveBtn.innerHTML = '<i class="far fa-bookmark"></i><span>حفظ</span>';
-        showToast('تم إلغاء الحفظ', 'info');
-    } else {
-        savedDuas.push(currentDua);
-        saveBtn.classList.add('saved');
-        saveBtn.innerHTML = '<i class="fas fa-bookmark"></i><span>محفوظ</span>';
-        showToast('تم الحفظ بنجاح ✓', 'success');
-    }
-    
-    localStorage.setItem('savedDuas', JSON.stringify(savedDuas));
-    updateSavedCount();
-    renderDuas(document.getElementById('searchInput').value ? 
-        duasData.filter(dua => 
-            dua.text.toLowerCase().includes(document.getElementById('searchInput').value.toLowerCase())
-        ) : duasData
-    );
-}
-
-function quickToggleSave(duaId) {
+function toggleDuaSave(duaId) {
     const dua = duasData.find(d => d.id === duaId);
     if (!dua) return;
     
@@ -186,125 +97,140 @@ function quickToggleSave(duaId) {
     
     if (index !== -1) {
         savedDuas.splice(index, 1);
-        showToast('تم إلغاء الحفظ', 'info');
+        showToast('تم إلغاء الحفظ');
     } else {
         savedDuas.push(dua);
-        showToast('تم الحفظ بنجاح ✓', 'success');
+        showToast('تم الحفظ بنجاح ✓');
     }
     
     localStorage.setItem('savedDuas', JSON.stringify(savedDuas));
     updateSavedCount();
-    renderDuas(document.getElementById('searchInput').value ? 
-        duasData.filter(d => 
-            d.text.toLowerCase().includes(document.getElementById('searchInput').value.toLowerCase())
-        ) : duasData
-    );
-}
-
-function shareDua() {
-    if (!currentDua) return;
     
-    const text = currentDua.text;
-    
-    if (navigator.share) {
-        navigator.share({
-            title: 'دعاء من القرآن الكريم',
-            text: text
-        }).then(() => {
-            showToast('تمت المشاركة بنجاح', 'success');
-        }).catch(() => {
-            copyDua();
-        });
+    const searchValue = document.getElementById('searchInput').value;
+    if (searchValue) {
+        const filtered = duasData.filter(d => 
+            d.text.toLowerCase().includes(searchValue.toLowerCase())
+        );
+        renderDuas(filtered);
     } else {
-        copyDua();
+        renderDuas();
     }
 }
 
-function updateSavedCount() {
-    document.getElementById('savedCount').textContent = savedDuas.length;
-}
-
-function openCollectivePrayer() {
-    const modal = document.getElementById('collectiveModal');
-    const list = document.getElementById('savedDuasList');
-    
-    if (savedDuas.length === 0) {
-        list.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-bookmark"></i>
-                <p>لا توجد أدعية محفوظة بعد</p>
-                <p style="font-size: 0.9rem; margin-top: 10px;">اضغط على أيقونة الحفظ على أي دعاء لإضافته هنا</p>
-            </div>
-        `;
-    } else {
-        list.innerHTML = savedDuas.map(dua => `
-            <div class="saved-dua-item">
-                <div class="saved-dua-content" onclick="openDuaModal(${JSON.stringify(dua).replace(/"/g, '&quot;')})">
-                    <div class="saved-dua-text">${dua.text}</div>
-                </div>
-                <div class="saved-dua-actions">
-                    <button class="small-btn" onclick="copyDuaFromList(${dua.id})" title="نسخ">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                    <button class="small-btn" onclick="removeSavedDua(${dua.id})" title="حذف">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-        `).join('');
-    }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeCollectiveModal() {
-    const modal = document.getElementById('collectiveModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-function copyDuaFromList(duaId) {
-    const dua = savedDuas.find(d => d.id === duaId);
-    if (!dua) return;
-    
-    const text = dua.text;
-    
-    navigator.clipboard.writeText(text).then(() => {
-        showToast('تم النسخ بنجاح ✓', 'success');
-    }).catch(() => {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        showToast('تم النسخ بنجاح ✓', 'success');
+function initSearch() {
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        if (query === '') {
+            renderDuas();
+        } else {
+            const filtered = duasData.filter(dua => 
+                dua.text.toLowerCase().includes(query)
+            );
+            renderDuas(filtered);
+        }
     });
 }
 
-function removeSavedDua(duaId) {
-    savedDuas = savedDuas.filter(d => d.id !== duaId);
+function initScrollBehavior() {
+    const topBar = document.getElementById('topBar');
+    const searchBar = document.getElementById('searchBar');
+    
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+            topBar.classList.add('header-hidden');
+            searchBar.classList.add('header-hidden');
+        } else if (currentScrollY < lastScrollY) {
+            topBar.classList.remove('header-hidden');
+            searchBar.classList.remove('header-hidden');
+        }
+        
+        lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
+    }, false);
+}
+
+function updateSavedCount() {
+    document.getElementById('savedCountBadge').textContent = savedDuas.length;
+}
+
+function openJamiDua() {
+    const modal = document.getElementById('jamiModal');
+    const list = document.getElementById('jamiDuasList');
+    
+    list.innerHTML = '<div class="flex flex-col gap-2">';
+    
+    duasData.forEach(dua => {
+        const isSaved = savedDuas.some(saved => saved.id === dua.id);
+        const duaElement = createJamiDuaElement(dua, isSaved);
+        list.innerHTML += duaElement;
+    });
+    
+    list.innerHTML += '</div>';
+    
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function createJamiDuaElement(dua, isSaved) {
+    return `
+        <div onclick="toggleDuaInJami(${dua.id})" class="flex cursor-pointer items-center gap-4 rounded-xl px-4 py-3 min-h-14 justify-between transition-all ${
+            isSaved 
+                ? 'bg-teal-highlight-light dark:bg-teal-highlight-dark' 
+                : 'bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10'
+        }">
+            <div class="flex flex-1 items-center gap-4">
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-lg ${
+                    isSaved 
+                        ? 'bg-primary/20 text-primary' 
+                        : 'bg-gray-200 dark:bg-white/10'
+                }">
+                    <span class="material-symbols-outlined ${isSaved ? 'filled' : ''} text-2xl ${
+                        isSaved ? 'text-primary' : 'text-gray-500 dark:text-gray-400'
+                    }">star</span>
+                </div>
+                <p class="flex-1 text-base font-normal leading-normal font-arabic" style="font-family: ${settings.fontFamily}; font-size: ${settings.fontSize}px; line-height: 1.8;">${dua.text}</p>
+            </div>
+        </div>
+    `;
+}
+
+function toggleDuaInJami(duaId) {
+    const dua = duasData.find(d => d.id === duaId);
+    if (!dua) return;
+    
+    const index = savedDuas.findIndex(d => d.id === duaId);
+    
+    if (index !== -1) {
+        savedDuas.splice(index, 1);
+        showToast('تم إلغاء الحفظ');
+    } else {
+        savedDuas.push(dua);
+        showToast('تم الحفظ بنجاح ✓');
+    }
+    
     localStorage.setItem('savedDuas', JSON.stringify(savedDuas));
     updateSavedCount();
-    openCollectivePrayer();
-    renderDuas(document.getElementById('searchInput').value ? 
-        duasData.filter(dua => 
-            dua.text.toLowerCase().includes(document.getElementById('searchInput').value.toLowerCase())
-        ) : duasData
-    );
-    showToast('تم الحذف', 'info');
+    renderDuas();
+    openJamiDua();
+}
+
+function closeJamiModal() {
+    const modal = document.getElementById('jamiModal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
 }
 
 function openSettings() {
     const modal = document.getElementById('settingsModal');
-    modal.classList.add('active');
+    modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 }
 
 function closeSettings() {
     const modal = document.getElementById('settingsModal');
-    modal.classList.remove('active');
+    modal.classList.add('hidden');
     document.body.style.overflow = '';
 }
 
@@ -317,56 +243,26 @@ function updateSettings() {
     
     localStorage.setItem('settings', JSON.stringify(settings));
     applySettings();
-    renderDuas(document.getElementById('searchInput').value ? 
-        duasData.filter(dua => 
-            dua.text.toLowerCase().includes(document.getElementById('searchInput').value.toLowerCase())
-        ) : duasData
-    );
-}
-
-function setAccentColor(color) {
-    settings.accentColor = color;
-    localStorage.setItem('settings', JSON.stringify(settings));
-    applySettings();
-    
-    document.querySelectorAll('.color-option').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    event.target.classList.add('active');
-    
-    showToast('تم تغيير اللون', 'success');
+    renderDuas();
 }
 
 function toggleTheme() {
-    const currentTheme = document.body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    const html = document.documentElement;
+    const icon = document.getElementById('themeIcon');
     
-    document.body.setAttribute('data-theme', newTheme);
-    settings.theme = newTheme;
-    localStorage.setItem('settings', JSON.stringify(settings));
-    
-    const icon = document.getElementById('theme-icon');
-    icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-    
-    showToast(newTheme === 'light' ? 'الوضع النهاري' : 'الوضع الليلي', 'info');
-}
-
-function resetSettings() {
-    if (!confirm('هل أنت متأكد من إعادة تعيين جميع الإعدادات؟')) return;
-    
-    settings = {
-        fontFamily: "'Scheherazade New', serif",
-        fontSize: 20,
-        accentColor: '#ffd700',
-        reduceMotion: false,
-        theme: 'dark'
-    };
+    if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        settings.theme = 'light';
+        icon.textContent = 'dark_mode';
+        showToast('الوضع النهاري');
+    } else {
+        html.classList.add('dark');
+        settings.theme = 'dark';
+        icon.textContent = 'light_mode';
+        showToast('الوضع الليلي');
+    }
     
     localStorage.setItem('settings', JSON.stringify(settings));
-    loadSettings();
-    renderDuas();
-    closeSettings();
-    showToast('تم إعادة تعيين الإعدادات', 'success');
 }
 
 function exportData() {
@@ -386,49 +282,43 @@ function exportData() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     
-    showToast('تم تصدير البيانات ✓', 'success');
+    showToast('تم تصدير البيانات ✓');
 }
 
-function showToast(message, type = 'info') {
+function showToast(message) {
     const existingToast = document.querySelector('.toast');
     if (existingToast) {
         existingToast.remove();
     }
     
     const toast = document.createElement('div');
-    toast.className = 'toast';
-    
-    const icon = type === 'success' ? 'fa-check-circle' : 
-                 type === 'error' ? 'fa-exclamation-circle' : 
-                 'fa-info-circle';
-    
+    toast.className = 'toast fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-primary text-background-dark px-6 py-4 rounded-full shadow-lg';
     toast.innerHTML = `
-        <i class="fas ${icon}"></i>
-        <span>${message}</span>
+        <span class="material-symbols-outlined">check_circle</span>
+        <span class="font-bold">${message}</span>
     `;
     
     document.body.appendChild(toast);
     
     setTimeout(() => {
-        toast.remove();
-    }, 3000);
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100px)';
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
 }
 
 document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal')) {
-        if (e.target.id === 'duaModal') closeModal();
-        if (e.target.id === 'collectiveModal') closeCollectiveModal();
-        if (e.target.id === 'settingsModal') closeSettings();
+    if (e.target.id === 'jamiModal') {
+        closeJamiModal();
+    }
+    if (e.target.id === 'settingsModal') {
+        closeSettings();
     }
 });
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        const activeModal = document.querySelector('.modal.active');
-        if (activeModal) {
-            if (activeModal.id === 'duaModal') closeModal();
-            if (activeModal.id === 'collectiveModal') closeCollectiveModal();
-            if (activeModal.id === 'settingsModal') closeSettings();
-        }
+        closeJamiModal();
+        closeSettings();
     }
 });
