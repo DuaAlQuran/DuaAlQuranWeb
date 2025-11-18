@@ -1,165 +1,1388 @@
 <!DOCTYPE html>
-<html class="light" dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جامع الدعاء - أدعية القرآن الكريم</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@200;300;400;500;600;700;800;900&family=Scheherazade+New:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon.png" type="image/png">
+    <title>أدعية وأذكار القرآن الكريم</title>
+    
     <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .material-symbols-outlined.filled {
-            font-variation-settings: 'FILL' 1
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --bg-light: #f8f9fa;
+            --bg-dark: #1a1a2e;
+            --card-light: rgba(255, 255, 255, 0.95);
+            --card-dark: rgba(30, 30, 46, 0.95);
+            --text-light: #2d3748;
+            --text-dark: #e2e8f0;
+            --shadow-light: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 10px 40px rgba(0, 0, 0, 0.5);
+            --accent-gold: #ffd700;
+            --accent-emerald: #10b981;
         }
-    </style>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#13ecda",
-                        "background-light": "#f6f8f8",
-                        "background-dark": "#102220",
-                        "teal-highlight-light": "#B2DFDB",
-                        "teal-highlight-dark": "#004D40",
-                        "text-light": "#333333",
-                        "text-dark": "#E0E0E0"
-                    },
-                    fontFamily: {
-                        "display": ["Manrope", "Noto Sans Arabic", "sans-serif"],
-                        "arabic": ["Scheherazade New", "Amiri", "Cairo", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-    <style>
+
         body {
-            min-height: max(884px, 100dvh);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        .header-hidden {
-            transform: translateY(-100%);
-            opacity: 0;
+
+        body.dark-mode {
+            background: var(--bg-dark);
+            color: var(--text-dark);
         }
-        .top-bar {
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+        body.dark-mode::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
-        #searchBar.header-hidden {
-            transform: translateY(-200%);
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--primary-gradient);
+            border-radius: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .header {
+            box-shadow: var(--shadow-dark);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 25px;
+            background: var(--card-light);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .nav-tab {
+            background: var(--card-dark);
+            color: var(--text-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+
+        .nav-tab span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-tab:hover::before {
+            left: 0;
+        }
+
+        .nav-tab:hover span {
+            color: white;
+        }
+
+        .nav-tab.active {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-tab.active span {
+            color: white;
+        }
+
+        /* Settings Bar */
+        .settings-bar {
+            background: var(--card-light);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-light);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        body.dark-mode .settings-bar {
+            background: var(--card-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .settings-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .settings-btn,
+        .theme-toggle {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            font-size: 1rem;
+        }
+
+        .settings-btn:hover,
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Settings Modal */
+        .settings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-modal.active {
+            display: flex;
+        }
+
+        .settings-content {
+            background: var(--card-light);
+            padding: 40px;
+            border-radius: 25px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-light);
+            position: relative;
+        }
+
+        body.dark-mode .settings-content {
+            background: var(--card-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .settings-content h2 {
+            margin-bottom: 30px;
+            color: var(--text-light);
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        body.dark-mode .settings-content h2 {
+            color: var(--text-dark);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .close-modal {
+            color: var(--text-dark);
+        }
+
+        .close-modal:hover {
+            transform: scale(1.2);
+            color: #667eea;
+        }
+
+        .setting-item {
+            margin-bottom: 25px;
+        }
+
+        .setting-item label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        body.dark-mode .setting-item label {
+            color: var(--text-dark);
+        }
+
+        .setting-item select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            background: rgba(102, 126, 234, 0.05);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        body.dark-mode .setting-item select {
+            background: rgba(102, 126, 234, 0.15);
+            color: var(--text-dark);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .setting-item select:hover,
+        .setting-item select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        /* Content Section */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            background: var(--card-light);
+            border-radius: 20px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .stat-card {
+            background: var(--card-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .stat-card p {
+            color: #a0aec0;
+        }
+
+        /* Dua Card */
+        .dua-card {
+            background: var(--card-light);
+            padding: 30px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        body.dark-mode .dua-card {
+            background: var(--card-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .dua-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .dua-card.current {
+            border-color: #10b981;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        body.dark-mode .dua-card.current {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+        }
+
+        .dua-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .dua-number {
+            background: var(--primary-gradient);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+            opacity: 0.5;
+        }
+
+        .favorite-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .favorite-btn.active {
+            filter: grayscale(0%);
+            opacity: 1;
+            animation: heartBeat 0.5s ease;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
+        }
+
+        .dua-text {
+            font-size: 1.3rem;
+            line-height: 2.2;
+            text-align: center;
+            color: var(--text-light);
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.03);
+            border-radius: 15px;
+            font-weight: 500;
+        }
+
+        body.dark-mode .dua-text {
+            color: var(--text-dark);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* Font Sizes */
+        body.font-small .dua-text { 
+            font-size: 1.1rem; 
+            line-height: 2; 
+        }
+        
+        body.font-medium .dua-text { 
+            font-size: 1.5rem; 
+            line-height: 2.3; 
+        }
+        
+        body.font-large .dua-text { 
+            font-size: 1.9rem; 
+            line-height: 2.6; 
+        }
+
+        /* Font Families */
+        body.font-traditional { 
+            font-family: 'Traditional Arabic', 'Arial', sans-serif; 
+        }
+        
+        body.font-naskh { 
+            font-family: 'Arabic Typesetting', 'Times New Roman', serif; 
+        }
+        
+        body.font-kufi { 
+            font-family: 'Simplified Arabic', 'Arial', sans-serif; 
+        }
+        
+        body.font-modern { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+
+        /* Filter Buttons */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: var(--card-light);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        body.dark-mode .filter-btn {
+            background: var(--card-dark);
+            color: var(--text-dark);
+        }
+
+        .filter-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        .reset-btn {
+            padding: 12px 24px;
+            background: var(--secondary-gradient);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.3);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(240, 147, 251, 0.4);
+        }
+
+        .reset-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-light);
+            padding: 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            text-align: center;
+            animation: scaleIn 0.5s ease;
+        }
+
+        body.dark-mode .reset-animation {
+            background: var(--card-dark);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .reset-animation .icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: spin 1s ease;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .reset-animation h2 {
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        body.dark-mode .reset-animation h2 {
+            color: var(--text-dark);
+        }
+
+        .reset-animation p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        body.dark-mode .reset-animation p {
+            color: #a0aec0;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a0aec0;
+        }
+
+        .empty-state svg {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--accent-emerald);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-right: 10px;
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                min-width: 100%;
+            }
+
+            .settings-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .settings-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+            }
+
+            body.font-small .dua-text { font-size: 1rem; }
+            body.font-medium .dua-text { font-size: 1.3rem; }
+            body.font-large .dua-text { font-size: 1.6rem; }
+
+            .settings-content {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
-    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-        
-        <!-- Top App Bar -->
-        <div id="topBar" class="top-bar sticky top-0 z-10 flex items-center justify-between bg-background-light/80 dark:bg-background-dark/80 p-4 pb-3 backdrop-blur-sm">
-            <div class="flex size-12 shrink-0 items-center">
-                <button onclick="openSettings()" class="flex h-12 min-w-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-transparent p-0 text-base font-bold leading-normal tracking-[0.015em] text-text-light dark:text-text-dark">
-                    <span class="material-symbols-outlined text-2xl">settings</span>
+<body class="font-medium font-modern">
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>دعاء القران</h1>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-section="duas">
+                <span>دعاء القران</span>
+            </button>
+            <button class="nav-tab" data-section="tasbih">
+                <span> ايات التسبيح</span>
+            </button>
+            <button class="nav-tab" data-section="ahmadah">
+                <span> ايات الحمد لله </span>
+            </button>
+        </div>
+
+        <!-- Settings Bar -->
+        <div class="settings-bar">
+            <div class="settings-buttons">
+                <button class="settings-btn" id="settingsBtn">
+                    ⚙️ الإعدادات
                 </button>
-            </div>
-            <h1 class="flex-1 text-center text-xl font-bold leading-tight tracking-[-0.015em] text-text-light dark:text-text-dark">أدعية القرآن الكريم</h1>
-            <div class="flex w-12 items-center justify-end">
-                <button onclick="toggleTheme()" class="flex h-12 min-w-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-transparent p-0 text-base font-bold leading-normal tracking-[0.015em] text-text-light dark:text-text-dark">
-                    <span class="material-symbols-outlined text-2xl" id="themeIcon">dark_mode</span>
+                <button class="theme-toggle" id="themeToggle">
+                    🌙 الوضع الليلي
                 </button>
-            </div>
-        </div>
-
-        <!-- Search Bar -->
-        <div id="searchBar" class="top-bar sticky top-[68px] z-10 bg-background-light/80 dark:bg-background-dark/80 p-4 pt-0 backdrop-blur-sm">
-            <div class="flex items-center gap-2 rounded-lg bg-white dark:bg-white/5 px-4 py-2">
-                <span class="material-symbols-outlined text-2xl text-gray-500 dark:text-gray-400">search</span>
-                <input type="text" id="searchInput" placeholder="ابحث عن دعاء..." class="flex-1 bg-transparent border-none outline-none text-base font-normal leading-normal text-text-light dark:text-text-dark placeholder-gray-500 dark:placeholder-gray-400">
-            </div>
-        </div>
-
-        <!-- Floating Action Button - Jami' Ad-Du'a -->
-        <button onclick="openJamiDua()" class="fixed bottom-6 left-6 z-20 flex items-center gap-3 rounded-full bg-primary px-6 py-4 shadow-lg hover:shadow-xl transition-all">
-            <span class="material-symbols-outlined text-2xl text-background-dark">book</span>
-            <span class="text-base font-bold text-background-dark">جامع الدعاء</span>
-            <span id="savedCountBadge" class="bg-background-dark/20 px-3 py-1 rounded-full text-sm font-bold text-background-dark">0</span>
-        </button>
-
-        <!-- Main Content - Duas List -->
-        <div id="duasContainer" class="flex flex-col gap-2 p-4 pt-2">
-            <!-- Duas will be rendered here -->
-        </div>
-
-        <!-- Modal for Jami' Ad-Du'a (All Duas) -->
-        <div id="jamiModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm">
-            <div class="flex items-center justify-center min-h-screen p-4">
-                <div class="bg-background-light dark:bg-background-dark rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
-                    <!-- Modal Header -->
-                    <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                        <h2 class="text-2xl font-bold text-text-light dark:text-text-dark">جامع الدعاء</h2>
-                        <button onclick="closeJamiModal()" class="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-white/10">
-                            <span class="material-symbols-outlined text-2xl">close</span>
-                        </button>
-                    </div>
-                    <!-- Modal Body -->
-                    <div id="jamiDuasList" class="flex-1 overflow-y-auto p-4">
-                        <!-- All duas will be rendered here -->
-                    </div>
-                </div>
             </div>
         </div>
 
         <!-- Settings Modal -->
-        <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm">
-            <div class="flex items-center justify-center min-h-screen p-4">
-                <div class="bg-background-light dark:bg-background-dark rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col">
-                    <!-- Modal Header -->
-                    <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                        <h2 class="text-2xl font-bold text-text-light dark:text-text-dark">الإعدادات</h2>
-                        <button onclick="closeSettings()" class="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-white/10">
-                            <span class="material-symbols-outlined text-2xl">close</span>
-                        </button>
-                    </div>
-                    <!-- Modal Body -->
-                    <div class="p-6 space-y-6">
-                        <!-- Font Family -->
-                        <div>
-                            <label class="block text-base font-bold mb-2 text-text-light dark:text-text-dark">نوع الخط</label>
-                            <select id="fontFamily" onchange="updateSettings()" class="w-full p-3 rounded-lg bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-600 text-text-light dark:text-text-dark">
-                                <option value="'Scheherazade New', serif">شهرزاد الجديد</option>
-                                <option value="'Amiri', serif">أميري</option>
-                                <option value="'Cairo', sans-serif">القاهرة</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Font Size -->
-                        <div>
-                            <label class="block text-base font-bold mb-2 text-text-light dark:text-text-dark">حجم الخط: <span id="fontSizeValue">18px</span></label>
-                            <input type="range" id="fontSize" min="14" max="28" value="18" step="1" onchange="updateSettings()" class="w-full">
-                        </div>
+        <div class="settings-modal" id="settingsModal">
+            <div class="settings-content">
+                <button class="close-modal" id="closeModal">×</button>
+                <h2>⚙️ إعدادات العرض</h2>
+                
+                <div class="setting-item">
+                    <label>حجم الخط:</label>
+                    <select id="fontSizeSelect">
+                        <option value="small">صغير</option>
+                        <option value="medium" selected>متوسط</option>
+                        <option value="large">كبير</option>
+                    </select>
+                </div>
 
-                        <!-- Reduce Motion -->
-                        <div class="flex items-center justify-between">
-                            <label class="text-base font-bold text-text-light dark:text-text-dark">تقليل الحركة</label>
-                            <input type="checkbox" id="reduceMotion" onchange="updateSettings()" class="w-12 h-6">
-                        </div>
-
-                        <!-- Export Data -->
-                        <button onclick="exportData()" class="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-primary text-background-dark font-bold hover:opacity-90 transition-opacity">
-                            <span class="material-symbols-outlined">download</span>
-                            <span>تصدير البيانات</span>
-                        </button>
-                    </div>
+                <div class="setting-item">
+                    <label>نوع الخط:</label>
+                    <select id="fontFamilySelect">
+                        <option value="traditional">تقليدي</option>
+                        <option value="naskh">نسخ</option>
+                        <option value="kufi">كوفي</option>
+                        <option value="modern" selected>حديث</option>
+                    </select>
                 </div>
             </div>
         </div>
 
+        <!-- Content Sections -->
+        <div id="duasSection" class="content-section active">
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <h3 id="duasTotalCount">0</h3>
+                    <p>إجمالي </p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="duasReadCount">0</h3>
+                    <p> المقروءة</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="duasFavCount">0</h3>
+                    <p>المفضلة</p>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="favorites">المفضلة</button>
+                <button class="filter-btn" data-filter="unread">غير المقروءة</button>
+                <button class="reset-btn" data-section="duas">إعادة تعيين</button>
+            </div>
+
+            <!-- Duas List -->
+            <div id="duasList"></div>
+        </div>
+
+        <div id="tasbihSection" class="content-section">
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <h3 id="tasbihTotalCount">0</h3>
+                    <p> الاجمالي</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="tasbihReadCount">0</h3>
+                    <p> المقروءة</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="tasbihFavCount">0</h3>
+                    <p>المفضلة</p>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="favorites">المفضلة</button>
+                <button class="filter-btn" data-filter="unread">غير المقروءة</button>
+                <button class="reset-btn" data-section="tasbih">🔄 إعادة تعيين</button>
+            </div>
+
+            <!-- Tasbih List -->
+            <div id="tasbihList"></div>
+        </div>
+
+        <div id="ahmadahSection" class="content-section">
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <h3 id="ahmadahTotalCount">0</h3>
+                    <p> الاجمالي</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="ahmadahReadCount">0</h3>
+                    <p>المقروءة </p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="ahmadahFavCount">0</h3>
+                    <p>المفضلة</p>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="favorites">المفضلة</button>
+                <button class="filter-btn" data-filter="unread">غير المقروءة</button>
+                <button class="reset-btn" data-section="ahmadah">🔄 إعادة تعيين</button>
+            </div>
+
+            <!-- Ahmadah List -->
+            <div id="ahmadahList"></div>
+        </div>
     </div>
 
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">↑</button>
+
+    <script>
+        // Data
+        const duasData = [
+            { id: 1, text: "﴿ ربنا تقبل منا إنك أنت السميع العليم ﴾" },
+            { id: 2, text: "﴿ ربنا واجعلنا مسلمين لك و من ذريتنا أمه مسلمة لك و أرنا مناسكنا و تب علينا إنك أنت التواب الرحيم ﴾" },
+            { id: 3, text: "﴿ ربنا اتنا في الدنيا حسنة و في  الاخرة حسنة و قنا عذاب النار ﴾" },
+            { id: 4, text: "﴿ ربنا أفرغ علينا صبرا وثبت أقدامنا وانصرنا على القوم الكافرين ﴾" },
+            { id: 5, text: "﴿ ربنا لا تؤاخذنا إن نسينا أو أخطأنا ربنا ولا تحمل علينا إصرا كما حملته على الذين من قبلنا ربنا ولا تحملنا ما لا طاقة لنا به واعف عنا واغفر لنا وارحمنا أنت مولانا فانصرنا على القوم الكافرين ﴾" },
+            { id: 6, text: "﴿ ربنا لا تزغ قلوبنا بعد إذ هديتنا وهب لنا من لدنك رحمة إنك أنت الوهاب ﴾" },
+            { id: 7, text: "﴿ ربنا إنك جامع الناس ليوم لا ريب فيه إن الله لا يخلف الميعاد ﴾" },
+            { id: 8, text: "﴿ ربنا إننا آمنا فاغفر لنا ذنوبنا وقنا عذاب النار﴾" },
+            { id: 9, text: "﴿ اللهم مالك الملك تؤتي الملك من تشاء وتنزع الملك ممن تشاء وتعز من تشاء وتذل من تشاء بيدك الخير إنك على كل شيء قدير تولج الليل في النهار وتولج النهار في الليل وتخرج الحي من الميت وتخرج الميت من الحي وترزق من تشاء بغير حساب ﴾" },
+            { id: 10, text: "﴿ رب هب لي من لدنك ذرية طيبة إنك سميع الدعاء ﴾" },
+            { id: 11, text: "﴿ ربنا آمنا بما أنزلت واتبعنا الرسول فاكتبنا مع الشاهدين ﴾" },
+            { id: 12, text: "﴿ آمنا بالله وما أنزل علينا وما أنزل على إبراهيم وإسماعيل وإسحاق ويعقوب والأسباط وما أوتي موسى وعيسى والنبيون من ربهم لا نفرق بين أحد منهم ونحن له مسلمون ﴾" },
+            { id: 13, text: "﴿ ربنا اغفر لنا ذنوبنا وإسرافنا في أمرنا وثبت أقدامنا وانصرنا على القوم الكافرين ﴾" },
+            { id: 14, text: "﴿ حسبنا الله ونعم الوكيل ﴾" },
+            { id: 15, text: "﴿ ربنا ما خلقت هذا باطلا سبحانك فقنا عذاب النار﴾" },
+            { id: 16, text: "﴿ ربنا إنك من تدخل النار فقد أخزيته وما للظالمين من أنصار﴾" },
+            { id: 17, text: "﴿ ربنا إننا سمعنا مناديا ينادي للإيمان أن آمنوا بربكم فآمنا ﴾" },
+            { id: 18, text: "﴿ ربنا فاغفر لنا ذنوبنا وكفر عنا سيئاتنا وتوفنا مع الأبرار ﴾" },
+            { id: 19, text: "﴿ ربنا وآتنا ما وعدتنا على رسلك ولا تخزنا يوم القيامة إنك لا تخلف الميعاد ﴾" },
+            { id: 20, text: "﴿ ربنا أخرجنا من هذه القرية الظالم أهلها واجعل لنا من لدنك وليا واجعل لنا من لدنك نصيرا ﴾" },
+            { id: 21, text: "﴿ ربنا آمنا فاكتبنا مع الشاهدين ﴾" },
+            { id: 22, text: "﴿ وما لنا لا نؤمن بالله وما جاءنا من الحق ونطمع أن يدخلنا ربنا مع القوم الصالحين ﴾" },
+            { id: 23, text: "﴿ إن صلاتي ونسكي ومحياي ومماتي لله رب العالمين لا شريك له وبذلك أمرت وأنا أول المسلمين ﴾" },
+			{ id: 24, text: "﴿ ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين ﴾" },
+			{ id: 25, text: "﴿ ربنا لا تجعلنا مع القوم الظالمين ﴾" },
+			{ id: 26, text: "﴿ وسع ربنا كل شىء علما على الله توكلنا ربنا افتح بيننا و بين قومنا بالحق و أنت خير الفاتحين ﴾" },
+            { id: 27, text: "﴿ ربنا أفرغ علينا صبرا وتوفنا مسلمين ﴾" },
+			{ id: 28, text: "﴿ أنت ولينا فاغفر لنا و ارحمنا و أنت خير الغافرين ﴾" },
+			{ id: 29, text: "﴿ واكتب لنا في هذه الدنيا حسنة وفي الآخرة إنا هدنا إليك ﴾" },
+            { id: 30, text: "﴿ حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم ﴾" },
+            { id: 31, text: "﴿ على الله توكلنا ربنا لا تجعلنا فتنة للقوم الظالمين ﴾" },
+            { id: 32, text: "﴿ ونجنا برحمتك من القوم الكافرين ﴾" },
+            { id: 33, text: "﴿ ربنا إنك آتيت فرعون وملأه زينة وأموالا في الحياة الدنيا ربنا ليضلوا عن سبيلك ربنا اطمس على أموالهم واشدد على قلوبهم فلا يؤمنوا حتى يروا العذاب الأليم ﴾" },
+            { id: 34, text: "﴿ رب إني أعوذ بك أن أسألك ما ليس لي به علم وإلا تغفر لي وترحمني أكن من الخاسرين ﴾" },
+            { id: 35, text: "﴿ رب قد آتيتني من الملك وعلمتني من تأويل الأحاديث فاطر السماوات والأرض أنت وليي في الدنيا والآخرة توفني مسلما وألحقني بالصالحين ﴾" },
+            { id: 36, text: "﴿ رب اجعل هذا البلد آمنا واجنبني وبني أن نعبد الأصنام ﴾" },
+            { id: 37, text: "﴿ رب إنهن أضللن كثيرا من الناس فمن تبعني فإنه مني ومن عصاني فإنك غفور رحيم ﴾" },
+            { id: 38, text: "﴿ ربنا إنك تعلم ما نخفي وما نعلن وما يخفى على الله من شيء في الأرض ولا في السماء ﴾" },
+            { id: 39, text: "﴿ إن ربي لسميع الدعاء ﴾" },
+            { id: 40, text: "﴿ رب اجعلني مقيم الصلاة ومن ذريتي ربنا وتقبل دعاء ﴾" },
+            { id: 41, text: "﴿ ربنا اغفر لي ولوالدي وللمؤمنين يوم يقوم الحساب ﴾" },
+            { id: 42, text: "﴿ رب أرحمهما كما ربياني صغيراً ﴾" },
+			{ id: 43, text: "﴿ رب أدخلني مدخل صدق  وأخرجني مخرج صدق واجعل لي من لذنك سلطانا نصيرا ﴾" },
+			{ id: 44, text: "﴿ وقل جاء الحق  وزهق الباطل إن الباطل كان زهوقا ﴾" },
+			{ id: 45, text: "﴿ عسى أن يهدين ربي لأقرب من هذا رشدا ﴾" },
+            { id: 46, text: "﴿ رب زدني علما ﴾" },
+            { id: 47, text: "﴿ أني مسنى الضر و أنت أرحم الرحمين ﴾" },
+            { id: 48, text: "﴿ أن لا إله  إلا انت سبحانك إني كنت من الظالمين ﴾" },
+            { id: 49, text: "﴿ رب لا تذرني فردا و أنت خير الوارثين ﴾" },
+            { id: 50, text: "﴿ رب فلا تجعلني في القوم الظالمين  ﴾" },
+            { id: 51, text: "﴿  رب أعوذ بك من همزات الشياطين وأعوذ بك رب أن يحضرون ﴾" },
+            { id: 52, text: "﴿ ربناء امنا فاغفر لنا و ارحمنا وأنت خير الراحمين ﴾" },
+            { id: 53, text: "﴿ رب أغفر و أرحم و أنت  خير  الراحمين ﴾" },
+            { id: 54, text: "﴿ ربنا أصرف عنا عذاب جهنم إن عذابها كان غراما إنها ساءت مستقرا و مقاما﴾" },
+            { id: 55, text: "﴿ ربنا هب لنا من أزواجنا وذرياتنا قرة أعين و اجعلنا للمتقين إماما ﴾" },
+            { id: 56, text: "﴿ رب هب لي حكما وألحقني بالصالحين واجعل لي لسان صدق في الآخرين واجعلني من ورثة جنة النعيم ولا تخزني يوم يبعثون يوم لا ينفع مال ولا بنون  إلا من أتى الله بقلب سليم ﴾" },
+            { id: 57, text: "﴿ فافتح بيني وبينهم فتحا ونجني ومن معي من المؤمنين ﴾" },
+			{ id: 58, text: "﴿الحمدلله الذي فضلنا على كثير من عباده المؤمنين﴾" },
+            { id: 59, text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت على و على ولدي و أن اعمل صالحا ترضاه و أدخلني برحمتك في عبادك الصالحين ﴾" },
+            { id: 60, text: "﴿ رب إني ظلمت نفسي فاغفر لي ﴾" },
+			{ id: 61, text: "﴿ رب بما أنعمت على فلن اكون ظهيراً للمجرمين ﴾" },
+			{ id: 62, text: "﴿ رب نجني من القوم الظالمين ﴾" },
+            { id: 63, text: "﴿ رب إني لما أنزلت إلي من خير فقير ﴾" },
+            { id: 64, text: "﴿ رب انصرني على القوم المفسدين ﴾" },
+            { id: 65, text: "﴿ رب هب لي من الصالحين ﴾" },
+            { id: 66, text: "﴿ رب أغفر لي و هب لي  ملكاً لا ينبغي لأحد من بعدى أنك أنت الوهاب ﴾" },
+            { id: 67, text: "﴿ أني مسني الشيطان بنصب وعذاب ﴾" },
+			{ id: 68, text: "﴿ حسبي الله عليه يتوكل المتوكلون ﴾" },
+            { id: 69, text: "﴿ اللهم فاطر السماوات والأرض عالم الغيب والشهادة أنت تحكم بين عبادك في ما كانوا فيه يختلفون ﴾" },
+            { id: 70, text: "﴿ ربنا وسعت كل شيء رحمة وعلما فاغفر للذين تابوا واتبعوا سبيلك وقهم عذاب الجحيم ﴾" },
+            { id: 71, text: "﴿ ربنا وأدخلهم جنات عدن التي وعدتهم ومن صلح من آبائهم وأزواجهم وذرياتهم إنك أنت العزيز الحكيم ﴾" },
+            { id: 72, text: "﴿ وقهم السيئات ومن تق السيئات يومئذ فقد رحمته وذلك هو الفوز العظيم ﴾" },
+            { id: 73, text: "﴿ رب أوزعني أن أشكر نعمتك التي أنعمت علي وعلى والدي وأن أعمل صالحا ترضاه وأصلح لي في ذريتي إني تبت إليك وإني من المسلمين ﴾" },
+            { id: 74, text: "﴿ أني مغلوب فانتصر ﴾" },
+            { id: 75, text: "﴿ ربنا اغفر لنا ولإخواننا الذين سبقونا بالإيمان ولا تجعل في قلوبنا غلا للذين آمنوا ربنا إنك رءوف رحيم ﴾" },
+            { id: 76, text: "﴿ ربنا عليك توكلنا وإليك أنبنا وإليك المصير﴾" },
+            { id: 77, text: "﴿ ربنا لا تجعلنا فتنة للذين كفروا واغفر لنا ربنا إنك أنت العزيز الحكيم ﴾" },
+            { id: 78, text: "﴿ ربنا أتمم لنا نورنا و اغفر لنا إنك على كل شى قدير ﴾" },
+			{ id: 79, text: "﴿ رب لا تذر على الأرض من الكافرين ديارا ﴾" },
+			{ id: 80, text: "﴿ أنك إن تذرهم يضلو عبادك و لا يلدوا إلا فاجر كفارا﴾" },
+            { id: 81, text: "﴿ رب اغفر لي ولوالدي ولمن دخل بيتي مؤمنا وللمؤمنين والمؤمنات ولا تزد الظالمين إلا تبارا ﴾" },
+        ];
+
+       const tasbihData = [
+    { id: 1, text: "﴿ سبحان الله ﴾" },
+    { id: 2, text: "﴿ سبحان الله وبحمده ﴾" }
+];
+
+const ahmadahData = [
+    { id: 1, text: "﴿ الحمد لله ﴾" },
+    { id: 2, text: "﴿ الحمد لله رب العالمين ﴾" }
+];
+
+        // App State
+        class AppState {
+            constructor(section) {
+                this.section = section;
+                this.storageKey = `${section}_state`;
+                this.load();
+            }
+
+            load() {
+                const saved = localStorage.getItem(this.storageKey);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.currentId = data.currentId || null;
+                    this.readIds = new Set(data.readIds || []);
+                    this.favorites = new Set(data.favorites || []);
+                } else {
+                    this.currentId = null;
+                    this.readIds = new Set();
+                    this.favorites = new Set();
+                }
+            }
+
+            save() {
+                localStorage.setItem(this.storageKey, JSON.stringify({
+                    currentId: this.currentId,
+                    readIds: Array.from(this.readIds),
+                    favorites: Array.from(this.favorites)
+                }));
+            }
+
+            markAsRead(id) {
+                this.readIds.add(id);
+                this.currentId = id;
+                this.save();
+            }
+
+            toggleFavorite(id) {
+                if (this.favorites.has(id)) {
+                    this.favorites.delete(id);
+                } else {
+                    this.favorites.add(id);
+                }
+                this.save();
+            }
+
+            isFavorite(id) {
+                return this.favorites.has(id);
+            }
+
+            isRead(id) {
+                return this.readIds.has(id);
+            }
+
+            isCurrent(id) {
+                return this.currentId === id;
+            }
+
+            reset() {
+                this.readIds.clear();
+                this.currentId = null;
+                this.save();
+            }
+        }
+
+        // Initialize states for each section
+        const states = {
+            duas: new AppState('duas'),
+            tasbih: new AppState('tasbih'),
+            ahmadah: new AppState('ahmadah')
+        };
+
+        // Current active section
+        let currentSection = 'duas';
+        let currentFilter = 'all';
+
+        // Settings
+        let fontSize = localStorage.getItem('fontSize') || 'medium';
+        let fontFamily = localStorage.getItem('fontFamily') || 'modern';
+        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSettings();
+            renderContent();
+            setupEventListeners();
+            updateStats();
+        });
+
+        function initializeSettings() {
+            // Apply saved settings
+            document.body.classList.remove('font-small', 'font-medium', 'font-large');
+            document.body.classList.add(`font-${fontSize}`);
+            
+            document.body.classList.remove('font-traditional', 'font-naskh', 'font-kufi', 'font-modern');
+            document.body.classList.add(`font-${fontFamily}`);
+            
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeToggle').textContent = '☀️ الوضع النهاري';
+            }
+
+            // Set select values
+            document.getElementById('fontSizeSelect').value = fontSize;
+            document.getElementById('fontFamilySelect').value = fontFamily;
+        }
+
+        function setupEventListeners() {
+            // Navigation tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const section = tab.dataset.section;
+                    switchSection(section);
+                });
+            });
+
+            // Settings modal
+            document.getElementById('settingsBtn').addEventListener('click', () => {
+                document.getElementById('settingsModal').classList.add('active');
+            });
+
+            document.getElementById('closeModal').addEventListener('click', () => {
+                document.getElementById('settingsModal').classList.remove('active');
+            });
+
+            document.getElementById('settingsModal').addEventListener('click', (e) => {
+                if (e.target.id === 'settingsModal') {
+                    document.getElementById('settingsModal').classList.remove('active');
+                }
+            });
+
+            // Font size
+            document.getElementById('fontSizeSelect').addEventListener('change', (e) => {
+                document.body.classList.remove('font-small', 'font-medium', 'font-large');
+                fontSize = e.target.value;
+                document.body.classList.add(`font-${fontSize}`);
+                localStorage.setItem('fontSize', fontSize);
+            });
+
+            // Font family
+            document.getElementById('fontFamilySelect').addEventListener('change', (e) => {
+                document.body.classList.remove('font-traditional', 'font-naskh', 'font-kufi', 'font-modern');
+                fontFamily = e.target.value;
+                document.body.classList.add(`font-${fontFamily}`);
+                localStorage.setItem('fontFamily', fontFamily);
+            });
+
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                isDarkMode = !isDarkMode;
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode);
+                document.getElementById('themeToggle').textContent = isDarkMode ? '☀️ الوضع النهاري' : '🌙 الوضع الليلي';
+            });
+
+            // Scroll to top
+            const scrollTopBtn = document.getElementById('scrollTop');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Filter buttons for each section
+            setupFilterButtons('duasSection');
+            setupFilterButtons('tasbihSection');
+            setupFilterButtons('ahmadahSection');
+
+            // Reset buttons
+            document.querySelectorAll('.reset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const section = btn.dataset.section;
+                    resetProgress(section);
+                });
+            });
+        }
+
+        function setupFilterButtons(sectionId) {
+            const section = document.getElementById(sectionId);
+            const filterBtns = section.querySelectorAll('.filter-btn');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    renderContent();
+                });
+            });
+        }
+
+        function switchSection(section) {
+            currentSection = section;
+            currentFilter = 'all';
+
+            // Update tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.section === section) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Update sections
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.getElementById(`${section}Section`).classList.add('active');
+
+            // Reset filter buttons
+            const activeSection = document.getElementById(`${section}Section`);
+            activeSection.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+
+            renderContent();
+            updateStats();
+        }
+
+        function renderContent() {
+            const data = getData();
+            const state = states[currentSection];
+            const listId = `${currentSection}List`;
+            const list = document.getElementById(listId);
+
+            // Filter data
+            let filteredData = data;
+            if (currentFilter === 'favorites') {
+                filteredData = data.filter(item => state.isFavorite(item.id));
+            } else if (currentFilter === 'unread') {
+                filteredData = data.filter(item => !state.isRead(item.id));
+            }
+
+            // Render
+            if (filteredData.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                        </svg>
+                        <h3>لا توجد عناصر</h3>
+                        <p>${currentFilter === 'favorites' ? 'لم تقم بإضافة أي عناصر للمفضلة بعد' : 'لقد قرأت جميع العناصر'}</p>
+                    </div>
+                `;
+            } else {
+                list.innerHTML = filteredData.map(item => createCard(item, state)).join('');
+
+                // Add event listeners
+                filteredData.forEach(item => {
+                    const card = document.getElementById(`card-${currentSection}-${item.id}`);
+                    const favBtn = card.querySelector('.favorite-btn');
+
+                    // Mark as read on scroll into view
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                                state.markAsRead(item.id);
+                                
+                                // Remove current class from all cards
+                                document.querySelectorAll('.dua-card.current').forEach(c => {
+                                    c.classList.remove('current');
+                                    const badge = c.querySelector('.badge');
+                                    if (badge) badge.remove();
+                                });
+                                
+                                // Add current class to this card
+                                card.classList.add('current');
+                                
+                                // Add badge if not exists
+                                const headerDiv = card.querySelector('.dua-header > div');
+                                if (!headerDiv.querySelector('.badge')) {
+                                    const badge = document.createElement('span');
+                                    badge.className = 'badge';
+                                    badge.textContent = 'ِ*';
+                                    headerDiv.appendChild(badge);
+                                }
+                                
+                                updateStats();
+                            }
+                        });
+                    }, { threshold: 0.5 });
+
+                    observer.observe(card);
+
+                    // Favorite button
+                    favBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        state.toggleFavorite(item.id);
+                        favBtn.classList.toggle('active');
+                        favBtn.textContent = state.isFavorite(item.id) ? '⭐' : '☆';
+                        updateStats();
+                    });
+                });
+
+                // Scroll to current item
+                if (state.currentId && currentFilter === 'all') {
+                    setTimeout(() => {
+                        const currentCard = document.getElementById(`card-${currentSection}-${state.currentId}`);
+                        if (currentCard) {
+                            currentCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 100);
+                }
+            }
+        }
+
+        function createCard(item, state) {
+            const isFavorite = state.isFavorite(item.id);
+            const isCurrent = state.isCurrent(item.id);
+            
+            return `
+                <div class="dua-card ${isCurrent ? 'current' : ''}" id="card-${currentSection}-${item.id}">
+                    <div class="dua-header">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="dua-number">${item.id}</div>
+                            ${isCurrent ? '<span class="badge">📍 آخر قراءة</span>' : ''}
+                        </div>
+                        <button class="favorite-btn ${isFavorite ? 'active' : ''}">
+                            ${isFavorite ? '⭐' : '☆'}
+                        </button>
+                    </div>
+                    <div class="dua-text">${item.text}</div>
+                </div>
+            `;
+        }
+
+        function getData() {
+            switch (currentSection) {
+                case 'duas': return duasData;
+                case 'tasbih': return tasbihData;
+                case 'ahmadah': return ahmadahData;
+                default: return [];
+            }
+        }
+
+        function updateStats() {
+            const data = getData();
+            const state = states[currentSection];
+
+            const totalCount = data.length;
+            const readCount = state.readIds.size;
+            const favCount = state.favorites.size;
+
+            document.getElementById(`${currentSection}TotalCount`).textContent = totalCount;
+            document.getElementById(`${currentSection}ReadCount`).textContent = readCount;
+            document.getElementById(`${currentSection}FavCount`).textContent = favCount;
+        }
+
+        function resetProgress(section) {
+            const sectionName = section === 'duas' ? 'الأدعية' : section === 'tasbih' ? 'التسبيحات' : 'الأحمدة';
+            
+            states[section].reset();
+            
+            const resetAnimation = document.createElement('div');
+            resetAnimation.className = 'reset-animation';
+            resetAnimation.innerHTML = `
+                <div class="icon">🔄</div>
+                <h2>تم إعادة التعيين بنجاح!</h2>
+                <p>تم مسح جميع ${sectionName} المقروءة</p>
+            `;
+            document.body.appendChild(resetAnimation);
+
+            setTimeout(() => {
+                resetAnimation.remove();
+                renderContent();
+                updateStats();
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
